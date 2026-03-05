@@ -1,0 +1,55 @@
+#logo {
+  width: 150px;
+  height: 50px;
+  margin-top: 0px;
+  margin-left: 15px;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  height: 60px;
+}
+
+.menu {
+  display: flex;
+  gap: 32px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.acoes {
+  margin-left: auto;
+  display: flex;
+  gap: 5px;
+}
+
+.botao {
+  width: 100px;
+  height: 36px;
+  display: flex;
+  justify-content: right;
+  transition: transform 0.5s ease;
+}
+
+.botao:hover {
+  transform: scale(1.05);
+}
+
+.botaoEntrar {
+  height: 40px;
+}
+
+.menuItem {
+  color: #46007E;
+  transition: transform 0.5s ease;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  color: #8E00FF;
+  text-decoration: underline;
+  transform: scale(1.05);
+}

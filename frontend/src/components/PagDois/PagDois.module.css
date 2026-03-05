@@ -1,0 +1,40 @@
+.titulo2 {
+  margin-top: 380px;
+  font-size: 50px;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  color: #B961FF;
+  margin-left: 80px;
+}
+
+.intro {
+  display: flex;
+  justify-content: baseline;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.legenda2 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-top: 435px;
+  margin-left: 100px;
+}
+
+.carrossel {
+  display: flex;
+  gap: 23px;
+  align-items: center;
+  margin-left: 65px;
+}
+
+.carrosselImg {
+  width: 320px;
+  height: 430px;
+}
+
+.carrosselLegenda {
+  text-align: center;
+  color: #B48FFF;
+  margin-top: -20px;
+}

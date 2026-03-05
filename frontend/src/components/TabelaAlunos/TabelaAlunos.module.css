@@ -1,0 +1,59 @@
+.searchText {
+  margin-top: 70px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchField {
+  display: flex;
+  gap: 10px;
+}
+
+.input {
+  width: 300px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.botaoBuscar {
+  width: 100px;
+  padding: 10px 20px;
+  background-color: #8E00FF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.table {
+  text-align: center;
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  border: #585858 1px solid;
+  box-shadow: 0px 1px 6px rgb(170, 170, 170);
+  margin-bottom: 70px;
+}
+
+.table th {
+  width: 20%;
+  background-color: #8E00FF;
+  padding: 5px;
+  border-right: #585858 1px solid;
+  color: white;
+}
+
+.table td {
+  padding: 10px;
+  border-right: #585858 1px solid;
+}
+
+.table tr:hover {
+  background-color: #b5b5b5;
+  cursor: pointer;
+}
+
+.fundoEscuro {
+  background-color: #E2E2E2;
+}

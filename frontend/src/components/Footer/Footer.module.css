@@ -1,0 +1,68 @@
+.footer {
+  background-color: #efefef;
+  height: 500px;
+  width: 100%;
+  margin-top: 100px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+.coluna1 {
+  text-align: left;
+  margin-left: 20px;
+  background-color: #efefef;
+}
+
+.colunas {
+  margin-top: 150px;
+  font-size: larger;
+  background-color: #efefef;
+}
+
+.logof {
+  width: 170px;
+  height: 55px;
+  margin-top: 100px;
+  background-color: transparent;
+}
+
+.textoF {
+  color: #46007E;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  margin-top: 50px;
+}
+
+.textoF2 {
+  color: #46007E;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  margin-bottom: 28px;
+  display: block;
+}
+
+.email {
+  display: flex;
+  justify-content: space-around;
+  width: 380px;
+  background-color: transparent;
+  margin-top: 60px;
+}
+
+.loc {
+  display: flex;
+  justify-content: space-around;
+  width: 235px;
+  background-color: transparent;
+  margin-top: 20px;
+}
+
+.trabalheConosco {
+  background-color: transparent;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+  color: #46007E;
+  font-weight: 600;
+  cursor: pointer;
+}

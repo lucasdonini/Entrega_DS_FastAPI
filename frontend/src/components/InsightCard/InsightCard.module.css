@@ -1,0 +1,28 @@
+.card {
+  align-items: center;
+  background-color: #8E00FF;
+  display: flex;
+  width: 400px;
+  height: 90px;
+  border-radius: 10px;
+  padding: 13px;
+  gap: 35px;
+}
+
+.icone {
+  margin-left: 10px;
+  color: white;
+  width: 60px;
+  height: 60px;
+  background-color: #B48FFF;
+  padding: 2px;
+  border-radius: 15px;
+}
+
+.content {
+  color: white;
+}
+
+.content h2 {
+  font-size: 35px;
+}
