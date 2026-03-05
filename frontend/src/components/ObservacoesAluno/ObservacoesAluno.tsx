@@ -1,0 +1,64 @@
+import { useNavigate, Link, useParams } from 'react-router-dom'
+import AlunoHeader from '../../components/AlunoHeader/AlunoHeader'
+import CardObservacao from '../../components/CardObservacao/CardObservacao'
+import styles from './ObservacoesAluno.module.css'
+
+// Placeholders — substituir pelos dados vindos da API
+const aluno = {
+  nome: '/* NOME_ALUNO */',
+  fotoPerfil: '/* URL_FOTO_PERFIL */',
+}
+
+interface Observacao {
+  titulo: string
+  texto: string
+  data: string
+}
+
+const observacoes: Observacao[] = [] /* OBSERVACOES_ALUNO */
+
+export default function ObservacoesAluno() {
+  const navigate = useNavigate()
+  const { matricula } = useParams() /* MATRICULA via React Router */
+
+  return (
+    <>
+      <AlunoHeader nomeAluno={aluno.nome} fotoPerfil={aluno.fotoPerfil} />
+      <main>
+        <button className={styles.btnVoltar} onClick={() => navigate(-1)}>
+          <i className="bi bi-arrow-left-circle"></i>
+          <p>Voltar</p>
+        </button>
+
+        <section className={styles.apresentacaoInformacoes}>
+          <h1 className={styles.tituloText}>Bem-vindo, {aluno.nome}!</h1>
+          <p className={styles.subtituloText}>Veja suas notas e observações</p>
+
+          <div className={styles.options}>
+            <Link to={`/aluno/${matricula}/notas`} className={styles.abaNotas}>
+              <i className="bi bi-journal"></i>
+              <p>Notas</p>
+            </Link>
+            <div className={styles.abaObservacoes}>
+              <i className="bi bi-chat-left-dots"></i>
+              <p>Observações</p>
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.tituloObservacoes}>
+          <h2>Observações</h2>
+          <div className={styles.quantidade}>
+            <p>{observacoes.length}</p>
+          </div>
+        </section>
+
+        <section className={styles.containerObservacoes}>
+          {observacoes.map((obs, i) => (
+            <CardObservacao key={i} titulo={obs.titulo} texto={obs.texto} data={obs.data} />
+          ))}
+        </section>
+      </main>
+    </>
+  )
+}

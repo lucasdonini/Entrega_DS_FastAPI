@@ -1,0 +1,44 @@
+.header {
+  width: 100%;
+  height: 70px;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: space-between;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.logo {
+  width: 150px;
+  height: 50px;
+  margin-top: 10px;
+  margin-left: 40px;
+}
+
+.infoAluno {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+
+.nomeClasse {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+  line-height: 0cm;
+}
+
+.perfil {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+.textNome {
+  font-weight: bold;
+}
+
+.textAluno {
+  color: gray;
+  margin-top: 20px;
+  font-size: small;
+}
