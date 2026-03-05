@@ -6,13 +6,13 @@ import styles from './ProfessorHome.module.css'
 
 // Placeholders — substituir pelos dados vindos da API
 const professor = {
-  nome: '/* NOME_PROFESSOR */',
-  materias: '/* MATERIAS_PROFESSOR */',
-  fotoPerfil: '/* URL_FOTO_PERFIL */',
+  nome: 'Marcelo Grilo',
+  materias: 'Banco de Dados, IA',
 }
-const alunos: { matricula: string; nome: string }[] = [/* LISTA_ALUNOS */]
-const totalNotas: number = /* TOTAL_NOTAS */0
-const mediaGeral: number = /* MEDIA_GERAL */0
+
+const alunos: { matricula: string; nome: string }[] = [{ matricula: '12345678', nome: 'Lucas Kluska Donini' }]
+const totalNotas: number = 2
+const mediaGeral: number = 8.5
 
 const iconeAlunos = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
@@ -52,7 +52,6 @@ export default function ProfessorHome() {
       <ProfessorHeader
         nomeProfessor={professor.nome}
         materias={professor.materias}
-        fotoPerfil={professor.fotoPerfil}
       />
       <main>
         <a href="/" className={styles.btnVoltar}>
@@ -73,7 +72,7 @@ export default function ProfessorHome() {
 
         <TabelaAlunos
           alunos={alunos}
-          onAlunoClick={(matricula) => navigate(`/aluno/${matricula}`)}
+          onAlunoClick={(matricula) => navigate(`/professor/aluno/${matricula}/notas`)}
         />
       </main>
     </>

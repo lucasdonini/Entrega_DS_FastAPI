@@ -4,8 +4,7 @@ import styles from './NotasAluno.module.css'
 
 // Placeholders — substituir pelos dados vindos da API
 const aluno = {
-  nome: '/* NOME_ALUNO */',
-  fotoPerfil: '/* URL_FOTO_PERFIL */',
+  nome: 'Lucas Kluska Donini',
 }
 
 interface Nota {
@@ -16,7 +15,22 @@ interface Nota {
   media: number | string
 }
 
-const notas: Nota[] = [] /* NOTAS_ALUNO */
+const notas: Nota[] = [
+  {
+    materia: 'Banco de Dados',
+    professor: 'Marcelo Grilo',
+    n1: 10,
+    n2: 10,
+    media: 10
+  },
+  {
+    materia: 'IA',
+    professor: 'Marcelo Grilo',
+    n1: 8,
+    n2: 6,
+    media: 7
+  }
+] /* NOTAS_ALUNO */
 
 export default function NotasAluno() {
   const navigate = useNavigate()
@@ -24,9 +38,9 @@ export default function NotasAluno() {
 
   return (
     <>
-      <AlunoHeader nomeAluno={aluno.nome} fotoPerfil={aluno.fotoPerfil} />
+      <AlunoHeader nomeAluno={aluno.nome} />
       <main>
-        <button className={styles.btnVoltar} onClick={() => navigate(-1)}>
+        <button className={styles.btnVoltar} onClick={() => navigate('/')}>
           <i className="bi bi-arrow-left-circle"></i>
           <p>Voltar</p>
         </button>

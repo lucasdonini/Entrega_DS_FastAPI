@@ -5,8 +5,7 @@ import styles from './ObservacoesAluno.module.css'
 
 // Placeholders — substituir pelos dados vindos da API
 const aluno = {
-  nome: '/* NOME_ALUNO */',
-  fotoPerfil: '/* URL_FOTO_PERFIL */',
+  nome: 'Lucas Kluska Donini',
 }
 
 interface Observacao {
@@ -15,7 +14,18 @@ interface Observacao {
   data: string
 }
 
-const observacoes: Observacao[] = [] /* OBSERVACOES_ALUNO */
+const observacoes: Observacao[] = [
+  {
+    titulo: 'PDI Recusado',
+    texto: 'Abre o Docker bixo!',
+    data: '3/3/2026'
+  },
+  {
+    titulo: 'Prova de Mongo',
+    texto: 'Hoje tem prática',
+    data: '2/3/2026'
+  }
+] /* OBSERVACOES_ALUNO */
 
 export default function ObservacoesAluno() {
   const navigate = useNavigate()
@@ -23,9 +33,9 @@ export default function ObservacoesAluno() {
 
   return (
     <>
-      <AlunoHeader nomeAluno={aluno.nome} fotoPerfil={aluno.fotoPerfil} />
+      <AlunoHeader nomeAluno={aluno.nome} />
       <main>
-        <button className={styles.btnVoltar} onClick={() => navigate(-1)}>
+        <button className={styles.btnVoltar} onClick={() => navigate('/')}>
           <i className="bi bi-arrow-left-circle"></i>
           <p>Voltar</p>
         </button>

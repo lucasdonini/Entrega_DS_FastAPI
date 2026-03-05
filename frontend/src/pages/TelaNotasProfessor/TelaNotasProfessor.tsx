@@ -7,17 +7,29 @@ import styles from './TelaNotasProfessor.module.css'
 
 // Placeholders — substituir pelos dados vindos da API
 const professor = {
-  nome: '/* NOME_PROFESSOR */',
-  materias: '/* MATERIAS_PROFESSOR */',
-  fotoPerfil: '/* URL_FOTO_PERFIL */',
+  nome: 'Marcelo Grilo',
+  materias: 'Banco de Dados, IA',
   usuario: '/* USUARIO_PROFESSOR */',
   disciplinas: [] as { codigo: string; nome: string }[], /* DISCIPLINAS_PROFESSOR */
 }
 
 const aluno = {
-  nome: '/* NOME_ALUNO */',
-  matricula: '/* MATRICULA_ALUNO */',
-  notas: [] as { disciplina: string; n1: number; n2: number; media: number }[], /* NOTAS_ALUNO */
+  nome: 'Lucas Kluska Donini',
+  matricula: '12345678',
+  notas: [
+    {
+    disciplina: 'Banco de Dados',
+    n1: 10,
+    n2: 10,
+    media: 10
+  },
+  {
+    disciplina: 'IA',
+    n1: 8,
+    n2: 6,
+    media: 7
+  }
+] /* NOTAS_ALUNO */
 }
 
 export default function TelaNotas() {
@@ -36,10 +48,9 @@ export default function TelaNotas() {
       <ProfessorHeader
         nomeProfessor={professor.nome}
         materias={professor.materias}
-        fotoPerfil={professor.fotoPerfil}
       />
       <main>
-        <button className={styles.btnVoltar} onClick={() => navigate(-1)}>
+        <button className={styles.btnVoltar} onClick={() => navigate('/professor')}>
           <i className="bi bi-arrow-left-circle"></i>
           Voltar
         </button>

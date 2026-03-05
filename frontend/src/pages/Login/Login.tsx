@@ -1,14 +1,16 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import elefante from '../../assets/elefante roxo.png'
-import styles from './Login.module.css'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import elefante from "../../assets/elefante roxo.png";
+import styles from "./Login.module.css";
 
 export default function Login() {
-  const navigate = useNavigate()
-  const [usuario, setUsuario] = useState('')
-  const [senha, setSenha] = useState('')
-  const [senhaVisivel, setSenhaVisivel] = useState(false)
-  const [mensagemErro, setMensagemErro] = useState<string | null>(/* MENSAGEM_ERRO */ null)
+  const navigate = useNavigate();
+  const [usuario, setUsuario] = useState("");
+  const [senha, setSenha] = useState("");
+  const [senhaVisivel, setSenhaVisivel] = useState(false);
+  const [mensagemErro, setMensagemErro] = useState<string | null>(
+    /* MENSAGEM_ERRO */ null,
+  );
 
   async function handleLogin() {
     // POST /api/login — substituir pela chamada real
@@ -18,14 +20,13 @@ export default function Login() {
   return (
     <div className={styles.body}>
       <div className={styles.container}>
-
         <div className={styles.imagem}>
           <img src={elefante} alt="Elefante Roxo" />
         </div>
 
         <div className={styles.formSide}>
           <div className={styles.headerForm}>
-            <a href="#" onClick={() => navigate(-1)}>
+            <a href="/">
               <i className="bi bi-arrow-left-circle"></i>
             </a>
             <h1>Acesse sua conta</h1>
@@ -48,7 +49,7 @@ export default function Login() {
               <label htmlFor="senha">Senha</label>
               <div className={styles.campoSenha}>
                 <input
-                  type={senhaVisivel ? 'text' : 'password'}
+                  type={senhaVisivel ? "text" : "password"}
                   id="senha"
                   placeholder="Digite sua senha"
                   value={senha}
@@ -56,7 +57,7 @@ export default function Login() {
                   required
                 />
                 <i
-                  className={`bi ${senhaVisivel ? 'bi-eye' : 'bi-eye-slash'}`}
+                  className={`bi ${senhaVisivel ? "bi-eye" : "bi-eye-slash"}`}
                   onClick={() => setSenhaVisivel(!senhaVisivel)}
                 />
               </div>
@@ -68,15 +69,16 @@ export default function Login() {
           </div>
 
           <div className={styles.footerLink}>
-            <p>Não tem acesso? <a href="/cadastro">Faça seu cadastro aqui.</a></p>
+            <p>
+              Não tem acesso? <a href="/cadastro">Faça seu cadastro aqui.</a>
+            </p>
           </div>
 
           {mensagemErro && (
             <p className={styles.mensagemErro}>{mensagemErro}</p>
           )}
         </div>
-
       </div>
     </div>
-  )
+  );
 }

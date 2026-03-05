@@ -1,7 +1,7 @@
-import logo from '../../assets/img/logo definitiva.png'
-import botaoEntrar from '../../assets/img/botão entrar.png'
-import botaoCadastro from '../../assets/img/botão cadastro.png'
-import styles from './Navbar.module.css'
+import logo from "../../assets/img/logo definitiva.png";
+import botaoEntrar from "../../assets/img/botão entrar.png";
+import botaoCadastro from "../../assets/img/botão cadastro.png";
+import styles from "./Navbar.module.css";
 
 export default function Navbar() {
   return (
@@ -18,11 +18,21 @@ export default function Navbar() {
 
         <div className={styles.acoes}>
           <a href="/login">
-            <img className={`${styles.botao} ${styles.botaoEntrar}`} src={botaoEntrar} alt="Botão Entrar" />
+            <img
+              className={`${styles.botao} ${styles.botaoEntrar}`}
+              src={botaoEntrar}
+              alt="Botão Entrar"
+            />
           </a>
-          <img className={styles.botao} src={botaoCadastro} alt="Botão Cadastro" />
+          <a href="/cadastro">
+            <img
+              className={styles.botao}
+              src={botaoCadastro}
+              alt="Botão Cadastro"
+            />
+          </a>
         </div>
       </nav>
     </header>
-  )
+  );
 }

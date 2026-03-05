@@ -7,14 +7,13 @@ import styles from './TelaObservacoesProfessor.module.css'
 
 // Placeholders — substituir pelos dados vindos da API
 const professor = {
-  nome: '/* NOME_PROFESSOR */',
-  materias: '/* MATERIAS_PROFESSOR */',
-  fotoPerfil: '/* URL_FOTO_PERFIL */',
+  nome: 'Marcelo Grilo',
+  materias: 'Banco de Dados, IA',
 }
 
 const aluno = {
-  nome: '/* NOME_ALUNO */',
-  matricula: '/* MATRICULA_ALUNO */',
+  nome: 'Lucas Kluska Donini',
+  matricula: '12345678',
 }
 
 interface Observacao {
@@ -23,7 +22,18 @@ interface Observacao {
   data: string
 }
 
-const observacoesIniciais: Observacao[] = [] /* OBSERVACOES_ALUNO */
+const observacoesIniciais: Observacao[] = [
+  {
+    titulo: 'PDI Recusado',
+    texto: 'Abre o Docker bixo!',
+    data: '3/3/2026'
+  },
+  {
+    titulo: 'Prova de Mongo',
+    texto: 'Hoje tem prática',
+    data: '2/3/2026'
+  }
+] /* OBSERVACOES_ALUNO */
 
 export default function TelaObservacoesProfessor() {
   const navigate = useNavigate()
@@ -47,10 +57,9 @@ export default function TelaObservacoesProfessor() {
       <ProfessorHeader
         nomeProfessor={professor.nome}
         materias={professor.materias}
-        fotoPerfil={professor.fotoPerfil}
       />
       <main>
-        <button className={styles.btnVoltar} onClick={() => navigate(-1)}>
+        <button className={styles.btnVoltar} onClick={() => navigate('/professor')}>
           <i className="bi bi-arrow-left-circle"></i>
           <p>Voltar</p>
         </button>
@@ -83,7 +92,7 @@ export default function TelaObservacoesProfessor() {
           </div>
           <button className={styles.btnAdicionarObservacao} onClick={() => setMostrarBox(!mostrarBox)}>
             <i className="bi bi-plus"></i>
-            <p>Adicionar Observação</p>
+            Adicionar Observação
           </button>
         </div>
 

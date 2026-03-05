@@ -3,10 +3,9 @@ import styles from './AlunoHeader.module.css'
 
 interface Props {
   nomeAluno: string       /* NOME_ALUNO */
-  fotoPerfil: string      /* URL_FOTO_PERFIL */
 }
 
-export default function AlunoHeader({ nomeAluno, fotoPerfil }: Props) {
+export default function AlunoHeader({ nomeAluno }: Props) {
   return (
     <header className={styles.header}>
       <img src={logo} alt="logo do colégio Mémora" className={styles.logo} />
@@ -15,7 +14,6 @@ export default function AlunoHeader({ nomeAluno, fotoPerfil }: Props) {
           <p className={styles.textNome}>{nomeAluno}</p>
           <p className={styles.textAluno}>Aluno</p>
         </div>
-        <img src={fotoPerfil} alt="foto de perfil do aluno" className={styles.perfil} />
       </div>
     </header>
   )

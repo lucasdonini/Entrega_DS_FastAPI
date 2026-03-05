@@ -9,8 +9,8 @@ import ProfessorHome from "./pages/ProfessorHome/ProfessorHome";
 import TelaNotasProfessor from "./pages/TelaNotasProfessor/TelaNotasProfessor";
 import TelaObservacoesProfessor from "./pages/TelaObservacoesProfessor/TelaObservacoesProfessor";
 import Cadastro from "./pages/Cadastro/Cadastro";
-import NotasAluno from "./components/NotasAluno/NotasAluno";
-import ObservacoesAluno from "./components/ObservacoesAluno/ObservacoesAluno";
+import NotasAluno from "./pages/NotasAluno/NotasAluno";
+import ObservacoesAluno from "./pages/ObservacoesAluno/ObservacoesAluno";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

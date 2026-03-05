@@ -20,7 +20,7 @@ export default function Cadastro() {
       <div className={styles.container}>
         <div className={styles.signIn}>
           <div className={styles.headerForm}>
-            <a href="/login">
+            <a href="/">
               <i className="bi bi-arrow-left-circle"></i>
             </a>
             <h1>Crie sua conta</h1>
