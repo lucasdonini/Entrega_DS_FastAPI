@@ -7,7 +7,7 @@ export default function Cadastro() {
   const navigate = useNavigate()
   const [nome, setNome] = useState('')
   const [matricula, setMatricula] = useState('')
-  const [email, setEmail] = useState('')
+  const [username, setEmail] = useState('')
   const [senha, setSenha] = useState('')
 
   async function handleCadastrar() {
@@ -28,18 +28,6 @@ export default function Cadastro() {
 
           <div>
             <div className={styles.inputGroup}>
-              <label htmlFor="username">Nome Completo</label>
-              <input
-                type="text"
-                id="username"
-                placeholder="Digite seu nome completo"
-                value={nome}
-                onChange={(e) => setNome(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className={styles.inputGroup}>
               <label htmlFor="matricula">Número de Matrícula</label>
               <input
                 type="text"
@@ -52,12 +40,12 @@ export default function Cadastro() {
             </div>
 
             <div className={styles.inputGroup}>
-              <label htmlFor="email">E-mail</label>
+              <label htmlFor="username">Nome de usuário</label>
               <input
-                type="email"
-                id="email"
-                placeholder="Digite seu e-mail"
-                value={email}
+                type="text"
+                id="username"
+                placeholder="Escolha um nome de usuário bem legal"
+                value={username}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
@@ -67,8 +55,8 @@ export default function Cadastro() {
               <label htmlFor="senha">Senha</label>
               <input
                 type="password"
-                id="senha"
-                placeholder="Digite sua senha"
+                id="text"
+                placeholder="Crie uma senha"
                 value={senha}
                 onChange={(e) => setSenha(e.target.value)}
                 required
