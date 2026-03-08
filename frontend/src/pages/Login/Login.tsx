@@ -97,7 +97,7 @@ export default function Login() {
             </div>
 
             <button className={styles.btnEntrar} onClick={handleLogin}>
-              Entrar
+              { loading ? 'Carregando...' : 'Entrar' }
             </button>
           </div>
 

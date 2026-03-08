@@ -38,7 +38,7 @@ export function usePost<T>(): {
 } {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const post = async (url: string, body: unknown) => {
     setLoading(true);
