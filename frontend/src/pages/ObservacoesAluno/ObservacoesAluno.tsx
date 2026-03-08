@@ -2,34 +2,19 @@ import { useNavigate, Link, useParams } from 'react-router-dom'
 import AlunoHeader from '../../components/AlunoHeader/AlunoHeader'
 import CardObservacao from '../../components/CardObservacao/CardObservacao'
 import styles from './ObservacoesAluno.module.css'
-
-// Placeholders — substituir pelos dados vindos da API
-const aluno = {
-  nome: 'Lucas Kluska Donini',
-}
-
-interface Observacao {
-  titulo: string
-  texto: string
-  data: string
-}
-
-const observacoes: Observacao[] = [
-  {
-    titulo: 'PDI Recusado',
-    texto: 'Abre o Docker bixo!',
-    data: '3/3/2026'
-  },
-  {
-    titulo: 'Prova de Mongo',
-    texto: 'Hoje tem prática',
-    data: '2/3/2026'
-  }
-] /* OBSERVACOES_ALUNO */
+import type ResponseLoginAluno from '../../types/ResponseLoginAluno'
 
 export default function ObservacoesAluno() {
   const navigate = useNavigate()
-  const { matricula } = useParams() /* MATRICULA via React Router */
+  const { matricula } = useParams()
+
+  const json = sessionStorage.getItem('info_aluno')
+  if (!json) {
+    navigate('/login')
+    return
+  }
+
+  const { aluno, observacoes_aluno: observacoes }: ResponseLoginAluno = JSON.parse(json)
 
   return (
     <>
@@ -65,7 +50,7 @@ export default function ObservacoesAluno() {
 
         <section className={styles.containerObservacoes}>
           {observacoes.map((obs, i) => (
-            <CardObservacao key={i} titulo={obs.titulo} texto={obs.texto} data={obs.data} />
+            <CardObservacao key={i} titulo={obs.remetente} texto={obs.mensagem} data={obs.data_envio} />
           ))}
         </section>
       </main>

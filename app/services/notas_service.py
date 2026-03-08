@@ -54,7 +54,7 @@ class NotasService:
     def atualizar_nota(self, matricula: str, nota: Nota):
 
         nota_real = Nota(
-            codigo=nota.codigo,
+            codigo=nota.id,
             n1=nota.n1,
             n2=nota.n2,
             matricula_aluno=nota.matricula,

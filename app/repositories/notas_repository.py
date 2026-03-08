@@ -15,7 +15,7 @@ class NotasRepository:
     def list(self):
         return self.db.query(Nota).all()
 
-    def carregar_nota(self, email: str):
+    def carregar_nota(self, usuario: str):
         aluno_repository = AlunoRepository(self.db)
 
         aluno = aluno_repository.buscar_por_email(email)

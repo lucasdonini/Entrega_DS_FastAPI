@@ -1,40 +1,22 @@
 import { useNavigate, Link, useParams } from 'react-router-dom'
 import AlunoHeader from '../../components/AlunoHeader/AlunoHeader'
 import styles from './NotasAluno.module.css'
-
-// Placeholders — substituir pelos dados vindos da API
-const aluno = {
-  nome: 'Lucas Kluska Donini',
-}
-
-interface Nota {
-  materia: string
-  professor: string
-  n1: number | string
-  n2: number | string
-  media: number | string
-}
-
-const notas: Nota[] = [
-  {
-    materia: 'Banco de Dados',
-    professor: 'Marcelo Grilo',
-    n1: 10,
-    n2: 10,
-    media: 10
-  },
-  {
-    materia: 'IA',
-    professor: 'Marcelo Grilo',
-    n1: 8,
-    n2: 6,
-    media: 7
-  }
-] /* NOTAS_ALUNO */
+import type ResponseLoginAluno from '../../types/ResponseLoginAluno'
 
 export default function NotasAluno() {
   const navigate = useNavigate()
-  const { matricula } = useParams() /* MATRICULA via React Router */
+  const { matricula } = useParams()
+
+  const json = sessionStorage.getItem('info_aluno')
+  if (!json) {
+    navigate('/login')
+    return
+  }
+
+  const infoAluno: ResponseLoginAluno = JSON.parse(json)
+  const { aluno, notas  } = infoAluno
+
+  console.log(notas)
 
   return (
     <>
@@ -66,7 +48,6 @@ export default function NotasAluno() {
             <thead>
               <tr>
                 <th><p>Matéria</p></th>
-                <th><p>Professor(a)</p></th>
                 <th><p>1° Nota</p></th>
                 <th><p>2° Nota</p></th>
                 <th><p>Média Final</p></th>
@@ -76,7 +57,6 @@ export default function NotasAluno() {
               {notas.map((nota, i) => (
                 <tr key={i}>
                   <td><p>{nota.materia}</p></td>
-                  <td><p>{nota.professor}</p></td>
                   <td><p>{nota.n1}</p></td>
                   <td><p>{nota.n2}</p></td>
                   <td><p className={styles.media}>{nota.media}</p></td>

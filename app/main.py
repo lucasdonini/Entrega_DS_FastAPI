@@ -27,13 +27,15 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 
 
 app = FastAPI()
-app.mount("/assets", StaticFiles(directory="../frontend/dist/assets"), name="assets")
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.mount("/assets", StaticFiles(directory="../frontend/dist/assets"), name="assets")
 
 
 @app.on_event("startup")
@@ -94,16 +96,12 @@ def post_veri_aluno(credenciais: CredenciaisLogin, db: Session = Depends(get_db)
     notas_service = NotasService(NotasRepository(db))
     observacoes_service = ObservacoesService(ObservacoesRepository(db))
 
-    usuario, senha = credenciais
-
-    aluno = aluno_service.login_aluno(usuario, senha)
-    notas_aluno = notas_service.carregar_nota(usuario)
-    observacoes_aluno = observacoes_service.carregar_obervacoes(usuario)
-    res_aluno = aluno.to_dict()
-    del res_aluno['senha']
+    aluno = aluno_service.login_aluno(credenciais.usuario, credenciais.senha)
+    notas_aluno = notas_service.carregar_nota(credenciais.usuario)
+    observacoes_aluno = observacoes_service.carregar_obervacoes(credenciais.usuario)
 
     return {
-        "aluno": res_aluno,
+        "aluno": aluno.to_dict(),
         "notas": notas_aluno,
         "observacoes_aluno": observacoes_aluno
     }

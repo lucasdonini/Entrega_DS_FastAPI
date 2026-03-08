@@ -9,7 +9,7 @@ class Nota(Base):
 
     __tablename__ = "notas"
 
-    codigo = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     n1 = Column(Numeric(4, 2))
     n2 = Column(Numeric(4, 2))
 
@@ -22,7 +22,7 @@ class Nota(Base):
 
     def to_dict(self):
         return {
-            "codigo": self.codigo,
+            "codigo": self.id,
             "n1": self.n1,
             "n2": self.n2,
             "matricula_aluno": self.id_aluno,

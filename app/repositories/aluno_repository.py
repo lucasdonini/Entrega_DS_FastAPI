@@ -15,8 +15,8 @@ class AlunoRepository:
     def list(self):
         return self.db.query(Aluno).all()
 
-    def buscar_por_email(self, email: str):
-        return (self.db.query(Aluno).filter(Aluno.email == email).first())
+    def buscar_por_usuario(self, usuario: str):
+        return (self.db.query(Aluno).filter(Aluno.usuario == usuario).first())
 
     def buscar_por_matricula(self, matricula: UUID):
         return self.db.get(Aluno, matricula)
