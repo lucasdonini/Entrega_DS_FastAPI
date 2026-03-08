@@ -7,6 +7,7 @@ import type ResponseLoginProfessor from "../../types/ResponseLoginProfessor";
 import { useEffect, useState } from "react";
 import type Professor from "../../types/Professor";
 import type Aluno from "../../types/Aluno";
+import type Disciplina from "../../types/Disciplina";
 
 const iconeAlunos = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
@@ -140,6 +141,7 @@ export default function ProfessorHome() {
   const [alunos, setAlunos] = useState<Aluno[]>([]);
   const [media, setMedia] = useState(0);
   const [qnt_notas, setQntNotas] = useState(0);
+  const [materias, setMaterias] = useState<Disciplina[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -149,18 +151,19 @@ export default function ProfessorHome() {
       return;
     }
 
-    const innerInfo: ResponseLoginProfessor = JSON.parse(json);
-    setProfessor(innerInfo.professor);
-    setAlunos(innerInfo.alunos);
-    setMedia(innerInfo.media_alunos);
-    setQntNotas(innerInfo.qnt_notas);
+    const professorInfo: ResponseLoginProfessor = JSON.parse(json);
+    setProfessor(professorInfo.professor);
+    setAlunos(professorInfo.alunos);
+    setMedia(professorInfo.media_alunos);
+    setQntNotas(professorInfo.qnt_notas);
+    setMaterias(professorInfo.materias);
     setLoaded(true);
   }, []);
 
   return (
     loaded && (
       <>
-        <ProfessorHeader nomeProfessor={professor!.nome} materias={""} />
+        <ProfessorHeader nomeProfessor={professor!.nome} materias={materias} />
         <main>
           <a href="/" className={styles.btnVoltar}>
             <i className="bi bi-arrow-left-circle"></i>

@@ -113,7 +113,7 @@ def enviar_observcao(observacao: ObservacaoCreate, db: Session = Depends(get_db)
 
     observacoes = observacoes_service.registrar_observacao(observacao)
 
-    return {"observacao": observacao.to_dict()}
+    return {"sucesso": True}
 
 
 @app.delete("/api/deletar-observacao/{usuario}")

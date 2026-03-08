@@ -1,5 +1,6 @@
 from repositories.notas_repository import NotasRepository
 from model.notas import Nota
+from schemas.nota_schema import NotaCreate
 from uuid import UUID
 
 
@@ -40,25 +41,22 @@ class NotasService:
 
             return [
                 {
-                    "codigo": nota.codigo,
+                    "codigo": nota.id,
                     "n1": nota.n1,
                     "n2": nota.n2,
-                    "matricula_aluno": nota.matricula_aluno,
+                    "matricula_aluno": nota.id_aluno,
                     "materia": disciplina.nome
                 } for nota, disciplina in notas
             ]
 
 
-         
-
-    def atualizar_nota(self, matricula: str, nota: Nota):
+    def atualizar_nota(self, matricula: str, nota: NotaCreate):
 
         nota_real = Nota(
-            codigo=nota.id,
             n1=nota.n1,
             n2=nota.n2,
-            matricula_aluno=nota.matricula,
-            cod_materia=nota.id_disciplina
+            id_aluno=nota.matricula_aluno,
+            id_disciplina=nota.cod_materia
         )
 
         matricula_uuid = UUID(matricula)

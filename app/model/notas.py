@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, Numeric
+from sqlalchemy import Column, ForeignKey, Integer, Numeric, Identity
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
 
@@ -9,7 +9,7 @@ class Nota(Base):
 
     __tablename__ = "notas"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer,Identity(True), primary_key=True)
     n1 = Column(Numeric(4, 2))
     n2 = Column(Numeric(4, 2))
 

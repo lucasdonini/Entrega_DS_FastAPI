@@ -42,4 +42,4 @@ class ProfessorService:
 
         materias = self.professor_repository.materias_lecionadas(usuario)
 
-        return [ materia.nome for materia in materias]
+        return [ { 'nome': materia.nome, 'codigo': materia.codigo } for materia in materias]

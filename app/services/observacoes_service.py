@@ -40,7 +40,6 @@ class ObservacoesService:
     def registrar_observacao(self, observacao: ObservacaoCreate):
 
         observacao_real = Observacoes(
-            id=observacao.id,
             data_envio=observacao.data_envio,
             mensagem=observacao.mensagem,
             id_destinatario=observacao.id_destinatario,

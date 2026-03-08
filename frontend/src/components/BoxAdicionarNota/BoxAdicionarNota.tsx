@@ -1,26 +1,22 @@
 import { useState } from 'react'
 import styles from './BoxAdicionarNota.module.css'
-
-interface Disciplina {
-  codigo: string
-  nome: string
-}
+import type Disciplina from '../../types/Disciplina'
 
 interface Props {
-  matriculaAluno: string        /* MATRICULA_ALUNO */
-  usuarioProfessor: string      /* USUARIO_PROFESSOR */
-  disciplinas: Disciplina[]     /* DISCIPLINAS_PROFESSOR */
+  matriculaAluno: string
+  usuarioProfessor: string
+  disciplinas: Disciplina[]
   onCancelar: () => void
-  onSalvar: (dados: { n1: number; n2: number; codigoDisciplina: string }) => void
+  onSalvar: (dados: { n1: number; n2: number; cod_materia: number }) => void
 }
 
 export default function BoxAdicionarNota({ matriculaAluno, usuarioProfessor, disciplinas, onCancelar, onSalvar }: Props) {
   const [n1, setN1] = useState('')
   const [n2, setN2] = useState('')
-  const [codigoDisciplina, setCodigoDisciplina] = useState('')
+  const [codigoDisciplina, setCodigoDisciplina] = useState(0)
 
   function handleSalvar() {
-    onSalvar({ n1: Number(n1), n2: Number(n2), codigoDisciplina })
+    onSalvar({ n1: Number(n1), n2: Number(n2), cod_materia: codigoDisciplina })
   }
 
   return (
@@ -40,10 +36,10 @@ export default function BoxAdicionarNota({ matriculaAluno, usuarioProfessor, dis
           value={n2}
           onChange={(e) => setN2(e.target.value)}
         />
-        <select value={codigoDisciplina} onChange={(e) => setCodigoDisciplina(e.target.value)}>
+        <select value={codigoDisciplina} onChange={(e) => setCodigoDisciplina(Number(e.target.value))}>
           <option value="">-- Selecione --</option>
-          {disciplinas.map((d) => (
-            <option key={d.codigo} value={d.codigo}>{d.nome}</option>
+          {disciplinas.map(({codigo, nome}) => (
+            <option key={codigo} value={codigo}>{nome}</option>
           ))}
         </select>
       </div>

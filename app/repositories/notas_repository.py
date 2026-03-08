@@ -29,8 +29,8 @@ class NotasRepository:
     def carregar_nota_por_matricula(self, matricula:UUID):
 
         return (self.db.query(Nota, Disciplina)
-                .join(Disciplina, Disciplina.codigo == Nota.cod_materia)
-                .filter(Nota.matricula_aluno == matricula).all())
+                .join(Disciplina, Disciplina.codigo == Nota.id_disciplina)
+                .filter(Nota.id_aluno == matricula).all())
     
 
 
