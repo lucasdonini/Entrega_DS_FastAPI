@@ -52,10 +52,10 @@ class AlunoService:
             usuario
         )
 
-    def completar_cadatro(self, matricula: str, email: str, senha: str):
+    def completar_cadatro(self, matricula: str, usuario: str, senha: str):
         matricula_uuid = UUID(matricula)
 
-        return self.aluno_repository.completar_cadatro(matricula_uuid, email, senha)
+        return self.aluno_repository.completar_cadatro(matricula_uuid, usuario, senha)
 
     def buscar_alunos_por_professor(self, usuario_professor: str):
 

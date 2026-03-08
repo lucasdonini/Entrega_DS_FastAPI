@@ -3,7 +3,6 @@ from schemas.observcao_schema import ObservacaoCreate
 from schemas.login_schema import CredenciaisLogin
 from schemas.cadastro_schema import CredenciaisCadastro
 
-
 from repositories.professor_repository import ProfessorRepository
 from repositories.aluno_repository import AlunoRepository
 from repositories.notas_repository import NotasRepository
@@ -136,10 +135,9 @@ def lancar_nota(matricula: str, nota: NotaCreate, db: Session = Depends(get_db))
 def completar_cadastro_endpoint(matricula: str, credenciais: CredenciaisCadastro, db: Session = Depends(get_db)):
     aluno_service = AlunoService(AlunoRepository(db))
 
-    usuario, senha = credenciais
-    resposta = aluno_service.completar_cadatro(matricula, usuario, senha)
-
-    return {"aluno":resposta.to_dict()}
+    resposta = aluno_service.completar_cadatro(matricula, credenciais.usuario, credenciais.senha)
+    
+    return resposta if type(resposta) == str else resposta.to_dict()
 
 
 

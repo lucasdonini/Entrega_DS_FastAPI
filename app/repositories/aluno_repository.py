@@ -45,7 +45,7 @@ class AlunoRepository:
         if not aluno:
             return "Aluno não encontrado"
 
-        aluno.email = email
+        aluno.usuario = email
         aluno.senha = senha
 
         self.db.commit()

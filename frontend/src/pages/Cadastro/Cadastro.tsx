@@ -1,19 +1,43 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import livroPng from '../../assets/livro com lampada.png'
-import styles from './Cadastro.module.css'
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import livroPng from "../../assets/livro com lampada.png";
+import styles from "./Cadastro.module.css";
+import { usePost } from "../../utils/request";
+import type Aluno from "../../types/Aluno";
 
 export default function Cadastro() {
-  const navigate = useNavigate()
-  const [nome, setNome] = useState('')
-  const [matricula, setMatricula] = useState('')
-  const [username, setEmail] = useState('')
-  const [senha, setSenha] = useState('')
+  const navigate = useNavigate();
+  const [matricula, setMatricula] = useState("");
+  const [username, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [mensagemErro, setMensagemErro] = useState("");
+  const { data, error, loading, post } = usePost<
+    Aluno | "Aluno não encontrado"
+  >();
 
   async function handleCadastrar() {
-    /* CHAMADA_API_CADASTRO */
-    navigate('/login')
+    const url = `/api/completar-cadastro/${matricula}`;
+    post(url, { usuario: username, senha: senha });
   }
+
+  useEffect(() => {
+    if (!data && !error) return;
+
+    if (error || data == "Aluno não encontrado") {
+      setMensagemErro(error ?? data as string);
+      return;
+    }
+
+    if (!data) {
+      console.error(
+        "Algo deu errado. A requisição funcionou mas o objeto resposta está vazio",
+      );
+      setMensagemErro("Erro interno");
+      return;
+    }
+
+    navigate("/login");
+  }, [data, error]);
 
   return (
     <div className={styles.body}>
@@ -54,8 +78,8 @@ export default function Cadastro() {
             <div className={styles.inputGroup}>
               <label htmlFor="senha">Senha</label>
               <input
-                type="password"
-                id="text"
+                type="text"
+                id="password"
                 placeholder="Crie uma senha"
                 value={senha}
                 onChange={(e) => setSenha(e.target.value)}
@@ -64,9 +88,11 @@ export default function Cadastro() {
             </div>
 
             <button className={styles.btnCadastrar} onClick={handleCadastrar}>
-              Cadastrar
+              {loading ? "Salvando..." : "Cadastrar"}
             </button>
           </div>
+
+          {mensagemErro && <p>{mensagemErro}</p>}
         </div>
 
         <div className={styles.imagem}>
@@ -74,5 +100,5 @@ export default function Cadastro() {
         </div>
       </div>
     </div>
-  )
+  );
 }
