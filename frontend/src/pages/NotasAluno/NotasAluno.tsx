@@ -85,7 +85,7 @@ export default function NotasAluno() {
                     <p>{nota.n2}</p>
                   </td>
                   <td>
-                    <p className={styles.media}>{nota.media}</p>
+                    <p className={styles.media}>{(nota.n1 + nota.n2) / 2}</p>
                   </td>
                 </tr>
               ))}

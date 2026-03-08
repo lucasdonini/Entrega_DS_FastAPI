@@ -19,13 +19,14 @@ export default function ObservacoesAluno() {
       navigate("/login");
       return;
     }
-    console.log(json);
 
     const infoAluno: ResponseLoginAluno = JSON.parse(json);
     setAluno(infoAluno.aluno);
     setObservacoes(infoAluno.observacoes_aluno);
     setLoaded(true);
   }, []);
+
+  console.log(observacoes)
 
   return loaded && (
     <>

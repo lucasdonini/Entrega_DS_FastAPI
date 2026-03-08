@@ -56,8 +56,8 @@ class ProfessorRepository:
             raise ValueError("Professor não encontrado")
         
         return (self.db.query(Disciplina)
-                .join(professor_disciplina, professor_disciplina.c.disciplina_id == Disciplina.codigo)
-                .filter(professor_disciplina.c.professor_id == professor.id)
+                .join(professor_disciplina, professor_disciplina.c.id_disciplina == Disciplina.codigo)
+                .filter(professor_disciplina.c.id_professor == professor.id)
                 .all()
                 )
     

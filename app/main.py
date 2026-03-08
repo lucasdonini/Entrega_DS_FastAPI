@@ -73,11 +73,11 @@ def post_veri_professor(credenciais: CredenciaisLogin, db: Session = Depends(get
     professor_service = ProfessorService(ProfessorRepository(db))
     aluno_service = AlunoService(AlunoRepository(db))
 
-    professor = professor_service.login_professor(usuario, senha)
-    alunos = aluno_service.buscar_alunos_por_professor(usuario)
-    qnt_notas = professor_service.contar_notas_lancadas(usuario)
-    media_alunos = professor_service.calc_media_geral(usuario)
-    materias = professor_service.materias_lecionadas(usuario)
+    professor = professor_service.login_professor(credenciais.usuario, credenciais.senha)
+    alunos = aluno_service.buscar_alunos_por_professor(credenciais.usuario)
+    qnt_notas = professor_service.contar_notas_lancadas(credenciais.usuario)
+    media_alunos = professor_service.calc_media_geral(credenciais.usuario)
+    materias = professor_service.materias_lecionadas(credenciais.usuario)
     res_professor = professor.to_dict()
     del res_professor['senha']
 

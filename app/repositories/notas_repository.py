@@ -21,8 +21,8 @@ class NotasRepository:
         aluno = aluno_repository.buscar_por_usuario(usuario)
 
         return (self.db.query(Nota, Disciplina)
-                .join(Disciplina, Disciplina.codigo == Nota.cod_materia)
-                .filter(Nota.matricula_aluno == aluno.matricula).all())
+                .join(Disciplina, Disciplina.codigo == Nota.id_disciplina)
+                .filter(Nota.id_aluno == aluno.matricula).all())
     
 
 
