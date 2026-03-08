@@ -9,7 +9,6 @@ import type Observacao from "../../types/Observacao";
 
 export default function ObservacoesAluno() {
   const navigate = useNavigate();
-  const { matricula } = useParams();
   const [aluno, setAluno] = useState<Aluno>();
   const [observacoes, setObservacoes] = useState<Observacao[]>([]);
   const [loaded, setLoaded] = useState(false);
@@ -42,7 +41,7 @@ export default function ObservacoesAluno() {
           <p className={styles.subtituloText}>Veja suas notas e observações</p>
 
           <div className={styles.options}>
-            <Link to={`/aluno/${matricula}/notas`} className={styles.abaNotas}>
+            <Link to={`/aluno/notas`} className={styles.abaNotas}>
               <i className="bi bi-journal"></i>
               <p>Notas</p>
             </Link>

@@ -8,7 +8,6 @@ import type Nota from '../../types/Nota'
 
 export default function NotasAluno() {
   const navigate = useNavigate();
-  const { matricula } = useParams();
   const [aluno, setAluno] = useState<Aluno>()
   const [notas, setNotas] = useState<Nota[]>([])
   const [loaded, setLoaded] = useState(false)
@@ -46,7 +45,7 @@ export default function NotasAluno() {
               <p>Notas</p>
             </div>
             <Link
-              to={`/aluno/${matricula}/observacoes`}
+              to={`/aluno/observacoes`}
               className={styles.abaObservacoes}
             >
               <i className="bi bi-chat-left-dots"></i>

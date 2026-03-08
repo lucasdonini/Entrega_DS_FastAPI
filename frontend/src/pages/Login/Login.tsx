@@ -43,7 +43,7 @@ export default function Login() {
       navigate("/professor");
     } else {
       sessionStorage.setItem('info_aluno', JSON.stringify(data))
-      navigate(`/aluno/${data.aluno.matricula}/notas`)
+      navigate(`/aluno/notas`)
     }
   }, [data, error]);
 

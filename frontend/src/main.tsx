@@ -28,9 +28,9 @@ createRoot(document.getElementById("root")!).render(
           element={<TelaObservacoesProfessor />}
         />
         <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/aluno/:matricula/notas" element={<NotasAluno />} />
+        <Route path="/aluno/notas" element={<NotasAluno />} />
         <Route
-          path="/aluno/:matricula/observacoes"
+          path="/aluno/observacoes"
           element={<ObservacoesAluno />}
         />
       </Routes>
