@@ -18,7 +18,7 @@ class NotasRepository:
     def carregar_nota(self, usuario: str):
         aluno_repository = AlunoRepository(self.db)
 
-        aluno = aluno_repository.buscar_por_email(email)
+        aluno = aluno_repository.buscar_por_usuario(usuario)
 
         return (self.db.query(Nota, Disciplina)
                 .join(Disciplina, Disciplina.codigo == Nota.cod_materia)
