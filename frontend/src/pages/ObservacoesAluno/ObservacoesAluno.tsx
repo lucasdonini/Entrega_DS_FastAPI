@@ -61,12 +61,13 @@ export default function ObservacoesAluno() {
         </section>
 
         <section className={styles.containerObservacoes}>
-          {observacoes.map((obs, i) => (
+          {observacoes.map(({ id, mensagem, data_envio }) => (
             <CardObservacao
-              key={i}
-              titulo={obs.remetente}
-              texto={obs.mensagem}
-              data={obs.data_envio}
+              key={id}
+              id={id}
+              sudo={false}
+              texto={mensagem}
+              data={data_envio}
             />
           ))}
         </section>
