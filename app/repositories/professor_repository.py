@@ -27,8 +27,9 @@ class ProfessorRepository:
         total = (
             self.db.query(func.count(Nota.matricula_aluno)).
             join(Disciplina, Disciplina.codigo == Nota.cod_materia).
-            join(professor_disciplina, professor_disciplina.c.disciplina_id == Disciplina.codigo).
-            filter(professor_disciplina.c.professor_id == professor.id).
+            join(professor_disciplina, 
+                 professor_disciplina.c["professor_id"] == Disciplina.codigo).
+            filter(professor_disciplina.c["professor_id"] == professor.id).
             scalar()
         )
         return total or 0
@@ -42,8 +43,8 @@ class ProfessorRepository:
 
         media_geral = (self.db.query(func.avg((Nota.n1+Nota.n2)/2.0)).
         join(Disciplina, Disciplina.codigo == Nota.cod_materia).
-        join(professor_disciplina, professor_disciplina.c.disciplina_id == Disciplina.codigo).
-        filter(professor_disciplina.c.professor_id == professor.id).
+        join(professor_disciplina, professor_disciplina.c["disciplina_id"] == Disciplina.codigo).
+        filter(professor_disciplina.c["disciplina_id"] == professor.id).
         scalar())
 
         

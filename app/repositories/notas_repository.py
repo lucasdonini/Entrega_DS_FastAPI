@@ -22,7 +22,7 @@ class NotasRepository:
         aluno_repository = AlunoRepository(self.db)
 
         aluno = aluno_repository.buscar_por_email(email)
-        return self.db.query(Nota.n1, Nota.n2, Nota.cod_materia).filter(Nota.matricula_aluno == aluno.matricula).all()
+        return self.db.query(Nota).filter(Nota.matricula_aluno == aluno.matricula).all()
     
 
 

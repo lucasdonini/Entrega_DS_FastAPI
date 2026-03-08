@@ -68,11 +68,11 @@ class AlunoRepository:
             self.db.query(Aluno).
             join(Nota, Nota.matricula_aluno == Aluno.matricula).
             join(Disciplina, Disciplina.codigo == Nota.cod_materia).
-            join(professor_disciplina, professor_disciplina.disciplina_id == Disciplina.codigo).
-            filter(professor_disciplina.professor_id == professor.id).
+            join(Disciplina.professores, Disciplina.professores == Disciplina.codigo).
+            filter(Disciplina, Disciplina.professores == professor.id).
             distinct().
             all()
         )
-        return alunos
+        return alunos or None
 
 

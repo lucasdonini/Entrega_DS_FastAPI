@@ -55,13 +55,13 @@ def get_veri_professor(usuario:str, senha:str, db: Session = Depends(get_db)):
 
     professor = professor_service.login_professor(usuario, senha)
     alunos = aluno_service.buscar_alunos_por_professor(usuario)
-    qnt_notas = professor_service.contar_notas_lancadas(usuario)
-    media_alunos = professor_service.calc_media_geral(usuario)
+    #qnt_notas = professor_service.contar_notas_lancadas(usuario)
+    #media_alunos = professor_service.calc_media_geral(usuario)
 
     return {
         "professor":professor.to_dict(),
-        "qnt_professores":qnt_notas,
-        "media_alunos":media_alunos,
+        #"qnt_notas":qnt_notas,
+        #"media_alunos":media_alunos,
         "alunos":alunos
     }
 

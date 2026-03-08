@@ -25,12 +25,7 @@ class ObservacoesService:
             
         observacoes = self.observacoes_repository.carregar_obervacoes(email)
         return [
-            {
-                "mensagem": observacao.mensagem,
-                "data_envio": observacao.data_envio,
-                "id_destinatario": observacao.id_destinatario,
-                "id_remetente": observacao.id_remetente
-            } for observacao in observacoes
+            observacao.to_dict() for observacao in observacoes
         ]
 
 

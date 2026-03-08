@@ -23,12 +23,7 @@ class NotasService:
             
             notas = self.notas_repository.carregar_nota(email)
             return [
-                {
-                    "n1":nota.n1,
-                    "n2":nota.n2,
-                    "matricula_aluno":nota.matricula_aluno,
-                    "cod_materia":nota.cod_materia
-                } for nota in notas
+                nota.to_dict() for nota in notas
             ]
          
 

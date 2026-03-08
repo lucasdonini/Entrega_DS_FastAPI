@@ -32,6 +32,6 @@ class Observacoes(Base):
             "id": str(self.id),
             "mensagem": self.mensagem,
             "data_envio": str(self.data_envio),
-            "id_remetente": self.id_remetente,
-            "id_destinatario": self.id_destinatario
+            "id_remetente": str(self.id_remetente),
+            "id_destinatario": str(self.id_destinatario)
         }

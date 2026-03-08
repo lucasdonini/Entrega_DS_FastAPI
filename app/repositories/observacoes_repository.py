@@ -26,7 +26,7 @@ class ObservacoesRepository:
         if not aluno:
             raise ValueError("Aluno não encontrado")
 
-        return (self.db.query(Observacoes.id_remetente, Observacoes.mensagem, Observacoes.data_envio)
+        return (self.db.query(Observacoes)
                 .filter(Observacoes.id_destinatario == aluno.matricula)
                 .all()
                 )
