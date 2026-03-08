@@ -20,6 +20,8 @@ export default function Login() {
     return "professor" in data;
   }
 
+  useEffect(() => sessionStorage.clear(), [])
+
   useEffect(() => {
     if (!data && !error) return;
 

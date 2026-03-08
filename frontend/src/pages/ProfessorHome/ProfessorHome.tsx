@@ -3,7 +3,10 @@ import ProfessorHeader from "../../components/ProfessorHeader/ProfessorHeader";
 import InsightCard from "../../components/InsightCard/InsightCard";
 import TabelaAlunos from "../../components/TabelaAlunos/TabelaAlunos";
 import styles from "./ProfessorHome.module.css";
-import type ProfessorLoginResponse from "../../types/ResponseLoginProfessor";
+import type ResponseLoginProfessor from "../../types/ResponseLoginProfessor";
+import { useEffect, useState } from "react";
+import type Professor from "../../types/Professor";
+import type Aluno from "../../types/Aluno";
 
 const iconeAlunos = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
@@ -133,60 +136,68 @@ const iconeMedia = (
 
 export default function ProfessorHome() {
   const navigate = useNavigate();
+  const [professor, setProfessor] = useState<Professor>();
+  const [alunos, setAlunos] = useState<Aluno[]>([]);
+  const [media, setMedia] = useState(0);
+  const [qnt_notas, setQntNotas] = useState(0);
+  const [loaded, setLoaded] = useState(false);
 
-  const json = sessionStorage.getItem("info_professor");
-  if (!json) {
-    navigate("/login");
-    return;
-  }
+  useEffect(() => {
+    const json = sessionStorage.getItem("info_professor");
+    if (!json) {
+      navigate("/login");
+      return;
+    }
 
-  const infoProfessor: ProfessorLoginResponse = JSON.parse(json);
-  const {
-    professor,
-    alunos,
-    media_alunos,
-    qnt_notas: qnt_notas,
-  } = infoProfessor;
+    const innerInfo: ResponseLoginProfessor = JSON.parse(json);
+    setProfessor(innerInfo.professor);
+    setAlunos(innerInfo.alunos);
+    setMedia(innerInfo.media_alunos);
+    setQntNotas(innerInfo.qnt_notas);
+    setLoaded(true);
+  }, []);
 
   return (
-    <>
-      <ProfessorHeader nomeProfessor={professor.nome} materias={""} />
-      <main>
-        <a href="/" className={styles.btnVoltar}>
-          <i className="bi bi-arrow-left-circle"></i>
-          <p>Voltar</p>
-        </a>
+    loaded && (
+      <>
+        <ProfessorHeader nomeProfessor={professor!.nome} materias={""} />
+        <main>
+          <a href="/" className={styles.btnVoltar}>
+            <i className="bi bi-arrow-left-circle"></i>
+            <p>Voltar</p>
+          </a>
 
-        <div className={styles.welcomeMessage}>
-          <h1>Bem-vindo, {professor.nome}!</h1>
-          <h3>Gerencie suas turmas</h3>
-        </div>
+          <div className={styles.welcomeMessage}>
+            <h1>Bem-vindo, {professor!.nome}!</h1>
+            <h3>Gerencie suas turmas</h3>
+          </div>
 
-        <div className={styles.insightsContainer}>
-          <InsightCard
-            icone={iconeAlunos}
-            valor={alunos.length}
-            label="Total de alunos"
-          />
-          <InsightCard
-            icone={iconeNotas}
-            valor={qnt_notas}
-            label="Notas lançadas"
-          />
-          <InsightCard
-            icone={iconeMedia}
-            valor={media_alunos}
-            label="Média geral dos alunos"
-          />
-        </div>
+          <div className={styles.insightsContainer}>
+            <InsightCard
+              icone={iconeAlunos}
+              valor={alunos.length}
+              label="Total de alunos"
+            />
+            <InsightCard
+              icone={iconeNotas}
+              valor={qnt_notas}
+              label="Notas lançadas"
+            />
+            <InsightCard
+              icone={iconeMedia}
+              valor={media}
+              label="Média geral dos alunos"
+            />
+          </div>
 
-        <TabelaAlunos
-          alunos={alunos}
-          onAlunoClick={(matricula) =>
-            navigate(`/professor/aluno/${matricula}/notas`)
-          }
-        />
-      </main>
-    </>
+          <TabelaAlunos
+            alunos={alunos}
+            onAlunoClick={(matricula) =>
+              navigate(`/professor/aluno/${matricula}/notas`)
+            }
+          />
+        </main>
+      </>
+    )
   );
 }

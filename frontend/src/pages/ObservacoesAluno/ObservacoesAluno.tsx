@@ -1,32 +1,44 @@
-import { useNavigate, Link, useParams } from 'react-router-dom'
-import AlunoHeader from '../../components/AlunoHeader/AlunoHeader'
-import CardObservacao from '../../components/CardObservacao/CardObservacao'
-import styles from './ObservacoesAluno.module.css'
-import type ResponseLoginAluno from '../../types/ResponseLoginAluno'
+import { useNavigate, Link, useParams } from "react-router-dom";
+import AlunoHeader from "../../components/AlunoHeader/AlunoHeader";
+import CardObservacao from "../../components/CardObservacao/CardObservacao";
+import styles from "./ObservacoesAluno.module.css";
+import type ResponseLoginAluno from "../../types/ResponseLoginAluno";
+import { useState, useEffect } from "react";
+import type Aluno from "../../types/Aluno";
+import type Observacao from "../../types/Observacao";
 
 export default function ObservacoesAluno() {
-  const navigate = useNavigate()
-  const { matricula } = useParams()
+  const navigate = useNavigate();
+  const { matricula } = useParams();
+  const [aluno, setAluno] = useState<Aluno>();
+  const [observacoes, setObservacoes] = useState<Observacao[]>([]);
+  const [loaded, setLoaded] = useState(false);
 
-  const json = sessionStorage.getItem('info_aluno')
-  if (!json) {
-    navigate('/login')
-    return
-  }
+  useEffect(() => {
+    const json = sessionStorage.getItem("info_aluno");
+    if (!json) {
+      navigate("/login");
+      return;
+    }
+    console.log(json);
 
-  const { aluno, observacoes_aluno: observacoes }: ResponseLoginAluno = JSON.parse(json)
+    const infoAluno: ResponseLoginAluno = JSON.parse(json);
+    setAluno(infoAluno.aluno);
+    setObservacoes(infoAluno.observacoes_aluno);
+    setLoaded(true);
+  }, []);
 
-  return (
+  return loaded && (
     <>
-      <AlunoHeader nomeAluno={aluno.nome} />
+      <AlunoHeader nomeAluno={aluno!.nome} />
       <main>
-        <button className={styles.btnVoltar} onClick={() => navigate('/')}>
+        <button className={styles.btnVoltar} onClick={() => navigate("/")}>
           <i className="bi bi-arrow-left-circle"></i>
           <p>Voltar</p>
         </button>
 
         <section className={styles.apresentacaoInformacoes}>
-          <h1 className={styles.tituloText}>Bem-vindo, {aluno.nome}!</h1>
+          <h1 className={styles.tituloText}>Bem-vindo, {aluno!.nome}!</h1>
           <p className={styles.subtituloText}>Veja suas notas e observações</p>
 
           <div className={styles.options}>
@@ -50,10 +62,15 @@ export default function ObservacoesAluno() {
 
         <section className={styles.containerObservacoes}>
           {observacoes.map((obs, i) => (
-            <CardObservacao key={i} titulo={obs.remetente} texto={obs.mensagem} data={obs.data_envio} />
+            <CardObservacao
+              key={i}
+              titulo={obs.remetente}
+              texto={obs.mensagem}
+              data={obs.data_envio}
+            />
           ))}
         </section>
       </main>
     </>
-  )
+  );
 }
