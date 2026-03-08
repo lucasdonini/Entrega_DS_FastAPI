@@ -30,17 +30,17 @@ export function useGet<T>(url: string): {
   return { data, error, loading };
 }
 
-export function usePost<T>(url: string): {
+export function usePost<T>(): {
   data: T | null;
   error: string | null;
   loading: boolean;
-  post: (body: unknown) => Promise<void>;
+  post: (url: string, body: unknown) => Promise<void>;
 } {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const post = async (body: unknown) => {
+  const post = async (url: string, body: unknown) => {
     setLoading(true);
     setError(null);
 

@@ -12,14 +12,10 @@ class NotasRepository:
     def __init__(self, db: Session):
         self.db = db
 
-
     def list(self):
         return self.db.query(Nota).all()
 
-
-
-    
-    def carregar_nota(self, email:str):
+    def carregar_nota(self, email: str):
         aluno_repository = AlunoRepository(self.db)
 
         aluno = aluno_repository.buscar_por_email(email)
@@ -43,8 +39,8 @@ class NotasRepository:
         nota_metodo = (
             self.db.query(Nota).
             filter(
-                Nota.matricula_aluno == matricula,
-                Nota.cod_materia == nota.cod_materia
+                Nota.id_aluno == matricula,
+                Nota.id_disciplina == nota.id_disciplina
             ).first()
         )
 
@@ -57,19 +53,16 @@ class NotasRepository:
                 matricula_aluno=matricula,
                 n1=nota.n1,
                 n2=nota.n2,
-                cod_materia=nota.cod_materia
+                cod_materia=nota.id_disciplina
             )
 
             self.db.add(nova_nota)
             self.db.commit()
 
         self.db.commit()
-        return nota   
+        return nota
 
-
-
-
-    def buscar_notas_por_professor(self, usuario_professor:str):
+    def buscar_notas_por_professor(self, usuario_professor: str):
         professor_repository = ProfessorRepository(self.db)
 
         professor = professor_repository.buscar_por_usuario(usuario_professor)
@@ -84,11 +77,4 @@ class NotasRepository:
 
         notas = self.db.execute(text(sql), {"professor_id": professor.id})
 
-
         return notas.fetchall()
-    
-    
-
-
-
-

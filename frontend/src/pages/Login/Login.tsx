@@ -1,20 +1,53 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { usePost } from "../../utils/request";
 import elefante from "../../assets/elefante roxo.png";
 import styles from "./Login.module.css";
+import type ResponseLoginProfessor from "../../types/ResponseLoginProfessor";
+import type ResponseLoginAluno from "../../types/ResponseLoginAluno";
+
+type ResponseLogin = ResponseLoginProfessor | ResponseLoginAluno;
 
 export default function Login() {
   const navigate = useNavigate();
   const [usuario, setUsuario] = useState("");
   const [senha, setSenha] = useState("");
   const [senhaVisivel, setSenhaVisivel] = useState(false);
-  const [mensagemErro, setMensagemErro] = useState<string | null>(
-    /* MENSAGEM_ERRO */ null,
-  );
+  const [mensagemErro, setMensagemErro] = useState<string | null>(null);
+  const { data, error, loading, post } = usePost<ResponseLogin>();
 
-  async function handleLogin() {
-    // POST /api/login — substituir pela chamada real
-    /* CHAMADA_API_LOGIN */
+  function isProfessor(data: ResponseLogin): data is ResponseLoginProfessor {
+    return "professor" in data;
+  }
+
+  useEffect(() => {
+    if (!data && !error) return;
+
+    if (error) {
+      setMensagemErro(error);
+      return;
+    }
+
+    if (!data) {
+      console.error(
+        "Algo deu errado. A requisição funcionou mas o objeto resposta está vazio",
+      );
+      setMensagemErro("Erro interno");
+      return;
+    }
+
+    if (isProfessor(data)) {
+      sessionStorage.setItem("info_professor", JSON.stringify(data));
+      navigate("/professor");
+    } else {
+      sessionStorage.setItem('info_aluno', JSON.stringify(data))
+      navigate(`/aluno/${data.aluno.matricula}/notas`)
+    }
+  }, [data, error]);
+
+  const handleLogin = async () => {
+    const url = usuario.match(/.*@.*/) ? '/api/login-professor' : '/api/login-aluno'
+    post(url, { usuario: usuario, senha: senha });
   }
 
   return (

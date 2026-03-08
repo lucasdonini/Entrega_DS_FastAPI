@@ -18,7 +18,6 @@ class Aluno(Base):
     nome = Column(String(100), nullable=False)
     senha = Column(String(100), nullable=True)
     usuario = Column(String(50), nullable=False)
-    email = Column(String(150), nullable=True)
 
     notas = relationship("Nota", back_populates="alunos")
     observacoes = relationship("Observacoes", back_populates="alunos")
@@ -29,6 +28,5 @@ class Aluno(Base):
             "matricula": str(self.matricula),
             "nome": self.nome,
             "usuario": self.usuario,
-            "email": self.email
         }
 

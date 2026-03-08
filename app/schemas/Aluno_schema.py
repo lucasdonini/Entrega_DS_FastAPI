@@ -7,4 +7,3 @@ class AlunoResponse:
     usuario:str
     email:str
     senha:str
-    

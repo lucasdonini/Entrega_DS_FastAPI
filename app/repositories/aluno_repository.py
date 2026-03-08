@@ -7,23 +7,21 @@ from uuid import UUID
 from sqlalchemy.orm import Session
 
 
-
 class AlunoRepository:
 
     def __init__(self, db: Session):
         self.db = db
 
-
     def list(self):
         return self.db.query(Aluno).all()
-    
-    def buscar_por_email(self, email:str):
+
+    def buscar_por_email(self, email: str):
         return (self.db.query(Aluno).filter(Aluno.email == email).first())
-    
-    def buscar_por_matricula(self, matricula:UUID):
+
+    def buscar_por_matricula(self, matricula: UUID):
         return self.db.get(Aluno, matricula)
 
-    def pre_cadastro(self, nome:str, matricula:UUID, usuario:str):
+    def pre_cadastro(self, nome: str, matricula: UUID, usuario: str):
 
         aluno = Aluno(
             matricula=matricula,
@@ -36,9 +34,9 @@ class AlunoRepository:
 
         return aluno
 
-    def completar_cadatro(self, matricula:UUID, email:str, senha:str):
+    def completar_cadatro(self, matricula: UUID, email: str, senha: str):
 
-        aluno =(
+        aluno = (
             self.db.query(Aluno).
             filter(Aluno.matricula == matricula).
             first()
@@ -46,18 +44,15 @@ class AlunoRepository:
 
         if not aluno:
             return "Aluno não encontrado"
-            
+
         aluno.email = email
         aluno.senha = senha
-            
-        
+
         self.db.commit()
         return aluno
-    
 
-    def buscar_alunos_por_professor(self, usuario_professor:str):
+    def buscar_alunos_por_professor(self, usuario_professor: str):
         professor_repository = ProfessorRepository(self.db)
-
 
         professor = professor_repository.buscar_por_usuario(usuario_professor)
 
@@ -66,13 +61,11 @@ class AlunoRepository:
 
         alunos = (
             self.db.query(Aluno).
-            join(Nota, Nota.matricula_aluno == Aluno.matricula).
-            join(Disciplina, Disciplina.codigo == Nota.cod_materia).
-            join(professor_disciplina, professor_disciplina.c.disciplina_id == Disciplina.codigo).
-            filter(professor_disciplina.c.professor_id == professor.id).
+            join(Nota, Nota.id_aluno == Aluno.matricula).
+            join(Disciplina, Disciplina.codigo == Nota.id_disciplina).
+            join(professor_disciplina, professor_disciplina.c.id_disciplina == Disciplina.codigo).
+            filter(professor_disciplina.c.id_professor == professor.id).
             distinct().
             all()
         )
         return alunos
-
-
