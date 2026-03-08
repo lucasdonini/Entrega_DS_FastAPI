@@ -99,9 +99,11 @@ def post_veri_aluno(credenciais: CredenciaisLogin, db: Session = Depends(get_db)
     aluno = aluno_service.login_aluno(usuario, senha)
     notas_aluno = notas_service.carregar_nota(usuario)
     observacoes_aluno = observacoes_service.carregar_obervacoes(usuario)
+    res_aluno = aluno.to_dict()
+    del res_aluno['senha']
 
     return {
-        "aluno": aluno.to_dict(),
+        "aluno": res_aluno,
         "notas": notas_aluno,
         "observacoes_aluno": observacoes_aluno
     }
