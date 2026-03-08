@@ -59,12 +59,13 @@ class ObservacoesRepository:
         ).all()
         return observacoes
 
-    def apagar_observacao(self, usuario_professor: str):
+    def apagar_observacao(self, id_observacao: UUID, usuario_professor: str):
         professor_repository = ProfessorRepository(self.db)
-
         professor = professor_repository.buscar_por_usuario(usuario_professor)
+
         observacao = self.db.query(Observacoes).filter(
-            Observacoes.id_remetente == professor.id
+            Observacoes.id_remetente == professor.id,
+            Observacoes.id == id_observacao
         ).first()
 
         if not observacao:

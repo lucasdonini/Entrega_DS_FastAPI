@@ -116,11 +116,11 @@ def enviar_observcao(observacao: ObservacaoCreate, db: Session = Depends(get_db)
     return {"sucesso": True}
 
 
-@app.delete("/api/deletar-observacao/{usuario}")
-def apagar_observcao(usuario: str, db: Session = Depends(get_db)):
+@app.delete("/api/deletar-observacao/{id}")
+def apagar_observcao(id: str, usuario_professor: str, db: Session = Depends(get_db)):
     observacoes_service = ObservacoesService(ObservacoesRepository(db))
 
-    observacoes_service.apagar_observacao(usuario)
+    observacoes_service.apagar_observacao(id_observacao=id, usuario=usuario_professor)
 
 
 @app.post("/api/lancar-nota/{matricula}")

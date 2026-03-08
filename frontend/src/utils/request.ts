@@ -57,3 +57,27 @@ export function usePost<T>(): {
   return { data, error, loading, post };
 }
 
+export function useDelete(): {
+  error: string | null;
+  loading: boolean;
+  delete: (url: string) => Promise<void>;
+} {
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const deleteReq = async (url: string) => {
+    setLoading(true);
+    setError(null);
+
+    await api
+      .delete(url)
+      .catch((err) => {
+        const message = err.response?.data?.error ?? err.message;
+        setError(message);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  return { error, loading, delete: deleteReq };
+}
+

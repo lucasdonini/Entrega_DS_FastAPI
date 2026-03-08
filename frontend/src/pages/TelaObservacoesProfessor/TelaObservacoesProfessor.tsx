@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { useGet, usePost } from "../../utils/request";
+import { useDelete, useGet, usePost } from "../../utils/request";
 import ProfessorHeader from "../../components/ProfessorHeader/ProfessorHeader";
 import CardObservacao from "../../components/CardObservacao/CardObservacao";
 import BoxNovaObservacao from "../../components/BoxNovaObservacao/BoxNovaObservacao";
@@ -33,6 +33,18 @@ export default function TelaObservacoesProfessor() {
     loading: postLoading,
     post,
   } = usePost<boolean>();
+
+  const {
+    error: deleteError,
+    loading: deleteLoading,
+    delete: deleteReq,
+  } = useDelete();
+
+  function handleDeletar(id: string) {
+    deleteReq(
+      `/api/deletar-observacao/${id}?usuario_professor=${professor!.usuario}`,
+    ).then(() => setRefreshKey(refreshKey + 1));
+  }
 
   function handleEnviar(texto: string) {
     const obs: CreateObservacao = {
@@ -138,11 +150,14 @@ export default function TelaObservacoesProfessor() {
           )}
 
           <div className={styles.containerObservacoes}>
-            {data!.observacoes.map((obs, i) => (
+            {data!.observacoes.map(({ id, mensagem, data_envio }) => (
               <CardObservacao
-                key={i}
-                texto={obs.mensagem}
-                data={obs.data_envio}
+                key={id}
+                id={id}
+                sudo={true}
+                onExcluir={handleDeletar}
+                texto={mensagem}
+                data={data_envio}
               />
             ))}
           </div>

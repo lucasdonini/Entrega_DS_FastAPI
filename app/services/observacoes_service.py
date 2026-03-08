@@ -67,6 +67,6 @@ class ObservacoesService:
         id_remetente_uuid = UUID(id_remetente)
         return (self.observacoes_repository.buscar_por_remetente(id_remetente_uuid))
 
-    def apagar_observacao(self, usuario: str):
+    def apagar_observacao(self, usuario: str, id_observacao: UUID):
 
-        self.observacoes_repository.apagar_observacao(usuario)
+        self.observacoes_repository.apagar_observacao(id_observacao=id_observacao, usuario_professor=usuario)
