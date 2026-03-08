@@ -17,17 +17,27 @@ from core.database import get_db
 
 
 from fastapi import FastAPI,Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from fastapi import Depends
+from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import Session
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 
 app = FastAPI()
+app.mount("/assets", StaticFiles(directory="../frontend/dist/assets"), name="assets")
 
 
 @app.on_event("startup")
 def startup():
     init_db()
+
+
+@app.exception_handler(StarletteHTTPException)
+async def spa_hanler(request, exc):
+    if exc.status_code == 404:
+        return FileResponse("../frontend/dist/index.html")
+    raise exc
 
 
 @app.exception_handler(ValueError)
