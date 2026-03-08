@@ -113,11 +113,7 @@ def enviar_observcao(observacao: ObservacaoCreate, db: Session = Depends(get_db)
 
     observacoes = observacoes_service.registrar_observacao(observacao)
 
-<<<<<<< HEAD
-    return {"observacao":observacoes}
-=======
     return {"observacao": observacao.to_dict()}
->>>>>>> bab789f (feat(login professor): make login work)
 
 
 @app.delete("/api/deletar-observacao/{usuario}")
@@ -143,7 +139,6 @@ def completar_cadastro_endpoint(matricula: str, credenciais: CredenciaisCadastro
     usuario, senha = credenciais
     resposta = aluno_service.completar_cadatro(matricula, usuario, senha)
 
-<<<<<<< HEAD
     return {"aluno":resposta.to_dict()}
 
 
@@ -164,6 +159,3 @@ def carregar_observacoes(matricula:str, db: Session = Depends(get_db)):
     observacoes = observacoes_service.carregar_obervacoes_por_matricula(matricula)
 
     return {"observacoes":observacoes}
-=======
-    return {"aluno": resposta.to_dict()}
->>>>>>> bab789f (feat(login professor): make login work)
