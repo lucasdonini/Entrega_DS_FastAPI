@@ -29,8 +29,9 @@
 }
 
 .carrosselImg {
-  width: 320px;
-  height: 430px;
+  width: clamp(200px, 22vw, 320px);
+  height: auto;
+  flex-shrink: 0;
 }
 
 .carrosselLegenda {
