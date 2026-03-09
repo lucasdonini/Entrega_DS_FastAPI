@@ -5,6 +5,7 @@ from model.professor_disciplina import professor_disciplina
 from repositories.professor_repository import ProfessorRepository
 from uuid import UUID
 from sqlalchemy.orm import Session
+from sqlalchemy import and_, select
 
 
 class AlunoRepository:
@@ -60,12 +61,17 @@ class AlunoRepository:
             raise ValueError("Professor não encontrado")
 
         alunos = (
-            self.db.query(Aluno).
-            join(Nota, Nota.id_aluno == Aluno.matricula).
-            join(Disciplina, Disciplina.codigo == Nota.id_disciplina).
-            join(professor_disciplina, professor_disciplina.c.id_disciplina == Disciplina.codigo).
-            filter(professor_disciplina.c.id_professor == professor.id).
-            distinct().
-            all()
+            self.db.query(Aluno)
+                .outerjoin(Nota, Nota.id_aluno == Aluno.matricula)
+                .outerjoin(Disciplina, and_(
+                    Disciplina.codigo == Nota.id_disciplina,
+                    Disciplina.codigo.in_(
+                        select(professor_disciplina.c.id_disciplina)
+                        .where(professor_disciplina.c.id_professor == professor.id)
+                    )
+                ))
+                .outerjoin(professor_disciplina, professor_disciplina.c.id_disciplina == Disciplina.codigo)
+                .distinct()
+                .all()
         )
         return alunos
