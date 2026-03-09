@@ -188,7 +188,7 @@ export default function ProfessorHome() {
             />
             <InsightCard
               icone={iconeMedia}
-              valor={media}
+              valor={media.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}
               label="Média geral dos alunos"
             />
           </div>

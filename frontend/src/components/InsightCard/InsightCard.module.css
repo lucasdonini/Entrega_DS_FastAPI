@@ -2,7 +2,7 @@
   align-items: center;
   background-color: #8E00FF;
   display: flex;
-  width: 400px;
+  width: clamp(280px, 30vw, 350px);
   height: 90px;
   border-radius: 10px;
   padding: 13px;
