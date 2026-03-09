@@ -38,7 +38,7 @@ export default function Footer() {
         {coluna3.map((item) => (
           <p key={item} className={styles.textoF2}>{item}</p>
         ))}
-        <u className={styles.trabalheConosco}>Trabalhe Conosco</u>
+        <p className={styles.trabalheConosco}>Trabalhe Conosco</p>
       </div>
 
     </footer>
