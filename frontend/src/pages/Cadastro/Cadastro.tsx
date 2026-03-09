@@ -64,11 +64,11 @@ export default function Cadastro() {
             </div>
 
             <div className={styles.inputGroup}>
-              <label htmlFor="username">Nome de usuário</label>
+              <label htmlFor="username">Email</label>
               <input
                 type="text"
                 id="username"
-                placeholder="Escolha um nome de usuário bem legal"
+                placeholder="Digite seu email institucional"
                 value={username}
                 onChange={(e) => setEmail(e.target.value)}
                 required

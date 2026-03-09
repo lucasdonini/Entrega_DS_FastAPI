@@ -50,10 +50,10 @@ class NotasRepository:
 
         else:
             nova_nota = Nota(
-                matricula_aluno=matricula,
+                id_aluno=matricula,
                 n1=nota.n1,
                 n2=nota.n2,
-                cod_materia=nota.id_disciplina
+                id_disciplina=nota.id_disciplina
             )
 
             self.db.add(nova_nota)

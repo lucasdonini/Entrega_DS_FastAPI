@@ -15,7 +15,7 @@ class AlunoService:
             {
                 "matricula": aluno.matricula,
                 "nome": aluno.nome,
-                "usuario": aluno.usuario,
+                "usuario": aluno.email,
                 "email": aluno.email
             } for aluno in alunos
         ]
@@ -39,7 +39,7 @@ class AlunoService:
             return {
                 "matricula": aluno.matricula,
                 "nome": aluno.nome,
-                "usuario": aluno.usuario,
+                "usuario": aluno.email,
                 "email": aluno.email
             }
 

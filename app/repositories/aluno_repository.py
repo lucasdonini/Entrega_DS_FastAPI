@@ -16,7 +16,7 @@ class AlunoRepository:
         return self.db.query(Aluno).all()
 
     def buscar_por_usuario(self, usuario: str):
-        return (self.db.query(Aluno).filter(Aluno.usuario == usuario).first())
+        return (self.db.query(Aluno).filter(Aluno.email == usuario).first())
 
     def buscar_por_matricula(self, matricula: UUID):
         return self.db.get(Aluno, matricula)
@@ -45,7 +45,7 @@ class AlunoRepository:
         if not aluno:
             return "Aluno não encontrado"
 
-        aluno.usuario = email
+        aluno.email = email
         aluno.senha = senha
 
         self.db.commit()

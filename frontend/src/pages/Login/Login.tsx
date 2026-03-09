@@ -48,7 +48,7 @@ export default function Login() {
   }, [data, error]);
 
   const handleLogin = async () => {
-    const url = usuario.match(/.*@.*/) ? '/api/login-professor' : '/api/login-aluno'
+    const url = !usuario.match(/.*@.*/) ? '/api/login-professor' : '/api/login-aluno'
     post(url, { usuario: usuario, senha: senha });
   }
 
