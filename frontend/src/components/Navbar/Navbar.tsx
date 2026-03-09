@@ -10,10 +10,10 @@ export default function Navbar() {
         <img id={styles.logo} src={logo} alt="logo" />
 
         <div className={styles.menu}>
-          <p className={styles.menuItem}>Início</p>
-          <p className={styles.menuItem}>Ensinos</p>
-          <p className={styles.menuItem}>Escola</p>
-          <p className={styles.menuItem}>Sobre Nós</p>
+          <a href="#" className={styles.menuItem}>Início</a>
+          <a href="#ensinos" className={styles.menuItem}>Ensinos</a>
+          <a href="#escola" className={styles.menuItem}>Escola</a>
+          <a href="#sobre-nos" className={styles.menuItem}>Sobre Nós</a>
         </div>
 
         <div className={styles.acoes}>

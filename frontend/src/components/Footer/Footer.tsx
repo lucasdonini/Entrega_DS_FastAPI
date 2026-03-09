@@ -8,7 +8,7 @@ const coluna3 = ['Certificações', 'Parcerias']
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} id="sobre-nos">
 
       <div className={styles.coluna1}>
         <img src={logoFooter} alt="Logo" className={styles.logof} />
