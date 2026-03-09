@@ -12,12 +12,19 @@ interface Props {
 }
 
 export default function TabelaAlunos({ alunos, onAlunoClick }: Props) {
-  const [busca, setBusca] = useState('')
-  const [filtro, setFiltro] = useState('')
+  const [buscaMat, setBuscaMat] = useState('')
+  const [filtroMat, setFiltroMat] = useState('')
+  const [buscaNome, setBuscaNome] = useState('')
+  const [filtroNome, setFiltroNome] = useState('')
 
   const alunosFiltrados = alunos.filter((a) =>
-    a.matricula.includes(filtro)
+    a.matricula.includes(filtroMat) && a.nome.includes(filtroNome)
   )
+
+  function handleBuscar() {
+    setFiltroMat(buscaMat)
+    setFiltroNome(buscaNome)
+  }
 
   return (
     <>
@@ -28,10 +35,19 @@ export default function TabelaAlunos({ alunos, onAlunoClick }: Props) {
             className={styles.input}
             type="text"
             placeholder="Buscar por matrícula..."
-            value={busca}
-            onChange={(e) => setBusca(e.target.value)}
+            value={buscaMat}
+            onChange={(e) => setBuscaMat(e.target.value)}
           />
-          <button className={styles.botaoBuscar} onClick={() => setFiltro(busca)}>
+
+          <input
+            className={styles.input}
+            type="text"
+            placeholder="Buscar por nome..."
+            value={buscaNome}
+            onChange={e => setBuscaNome(e.target.value)}
+          />
+
+          <button className={styles.botaoBuscar} onClick={handleBuscar}>
             Buscar
           </button>
         </div>
