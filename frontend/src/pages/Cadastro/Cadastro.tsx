@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import livroPng from "../../assets/livro com lampada.png";
+import livroPng from "../../assets/img/livro com lampada.png";
 import styles from "./Cadastro.module.css";
 import { usePost } from "../../utils/request";
 import type Aluno from "../../types/Aluno";

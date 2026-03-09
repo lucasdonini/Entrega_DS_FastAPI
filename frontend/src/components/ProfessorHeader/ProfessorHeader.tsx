@@ -1,4 +1,4 @@
-import logo from '../../assets/logo.png'
+import logo from '../../assets/img/logo.png'
 import styles from './ProfessorHeader.module.css'
 import type Disciplina from '../../types/Disciplina'
 

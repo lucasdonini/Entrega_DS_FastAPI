@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { usePost } from "../../utils/request";
-import elefante from "../../assets/elefante roxo.png";
+import elefante from "../../assets/img/elefante roxo.png";
 import styles from "./Login.module.css";
 import type ResponseLoginProfessor from "../../types/ResponseLoginProfessor";
 import type ResponseLoginAluno from "../../types/ResponseLoginAluno";
