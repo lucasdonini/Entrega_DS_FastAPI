@@ -70,23 +70,28 @@ async def generic_exception_handler(request: Request, exc: Exception):
 @app.post("/api/login-professor")
 def post_veri_professor(credenciais: CredenciaisLogin, db: Session = Depends(get_db)):
     professor_service = ProfessorService(ProfessorRepository(db))
+
+    validacao_professor = professor_service.login_professor(credenciais.usuario, credenciais.senha)
+    
+
+    return validacao_professor
+
+
+
+
+@app.get("api/professor/get-informacoes")
+def get_info_professor(credenciais:CredenciaisLogin, db:Session = Depends(get_db)):
     aluno_service = AlunoService(AlunoRepository(db))
+    professor_service = ProfessorService(ProfessorRepository(db))
 
-    professor = professor_service.login_professor(credenciais.usuario, credenciais.senha)
-    alunos = aluno_service.buscar_alunos_por_professor(credenciais.usuario)
-    qnt_notas = professor_service.contar_notas_lancadas(credenciais.usuario)
-    media_alunos = professor_service.calc_media_geral(credenciais.usuario)
+    professor = professor_service.buscar_por_usuario(credenciais.usuario)
+    lista_alunos = aluno_service.buscar_alunos_por_professor(credenciais.usuario)
     materias = professor_service.materias_lecionadas(credenciais.usuario)
-    res_professor = professor.to_dict()
-    del res_professor['senha']
 
-    return {
-        "professor":res_professor,
-        "qnt_notas":qnt_notas,
-        "media_alunos":media_alunos,
-        "alunos":alunos,
-        "materias":materias
-    }
+    return {"professor":professor,
+            "alunos":lista_alunos,
+            "materias":materias}
+
 
 
 @app.post("/api/login-aluno")
