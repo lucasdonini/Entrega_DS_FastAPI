@@ -8,7 +8,7 @@ const coluna3 = ['Certificações', 'Parcerias']
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} id="sobre-nos">
 
       <div className={styles.coluna1}>
         <img src={logoFooter} alt="Logo" className={styles.logof} />
@@ -38,7 +38,7 @@ export default function Footer() {
         {coluna3.map((item) => (
           <p key={item} className={styles.textoF2}>{item}</p>
         ))}
-        <u className={styles.trabalheConosco}>Trabalhe Conosco</u>
+        <p className={styles.trabalheConosco}>Trabalhe Conosco</p>
       </div>
 
     </footer>

@@ -24,6 +24,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+import traceback
+
 
 app = FastAPI()
 
@@ -51,6 +53,8 @@ async def spa_hanler(request, exc):
 
 @app.exception_handler(ValueError)
 async def value_error_handler(request: Request, exc: ValueError):
+    stack = "".join(traceback.format_exception(type(exc), exc, exc.__traceback__))
+    print(f"400: {stack}")
     return JSONResponse(
         status_code=400,
         content={"error": str(exc)}
@@ -79,14 +83,14 @@ def post_veri_professor(credenciais: CredenciaisLogin, db: Session = Depends(get
 
 
 
-@app.get("api/professor/get-informacoes")
-def get_info_professor(credenciais:CredenciaisLogin, db:Session = Depends(get_db)):
-    aluno_service = AlunoService(AlunoRepository(db))
+@app.get("/api/professor/get-informacoes/{usuario}")
+def get_info_professor(usuario: str, db:Session = Depends(get_db)):
+    aluno_service = AlunoService(AlunoRepository(db), NotasRepository(db))
     professor_service = ProfessorService(ProfessorRepository(db))
 
-    professor = professor_service.buscar_por_usuario(credenciais.usuario)
-    lista_alunos = aluno_service.buscar_alunos_por_professor(credenciais.usuario)
-    materias = professor_service.materias_lecionadas(credenciais.usuario)
+    professor = professor_service.buscar_por_usuario(usuario)
+    lista_alunos = aluno_service.buscar_alunos_por_professor(usuario)
+    materias = professor_service.materias_lecionadas(usuario)
 
     return {"professor":professor,
             "alunos":lista_alunos,
@@ -96,7 +100,7 @@ def get_info_professor(credenciais:CredenciaisLogin, db:Session = Depends(get_db
 
 @app.post("/api/login-aluno")
 def post_veri_aluno(credenciais: CredenciaisLogin, db: Session = Depends(get_db)):
-    aluno_service = AlunoService(AlunoRepository(db))
+    aluno_service = AlunoService(AlunoRepository(db), NotasRepository(db))
     notas_service = NotasService(NotasRepository(db))
     observacoes_service = ObservacoesService(ObservacoesRepository(db))
 
@@ -138,7 +142,7 @@ def lancar_nota(matricula: str, nota: NotaCreate, db: Session = Depends(get_db))
 
 @app.post("/api/completar-cadastro/{matricula}")
 def completar_cadastro_endpoint(matricula: str, credenciais: CredenciaisCadastro, db: Session = Depends(get_db)):
-    aluno_service = AlunoService(AlunoRepository(db))
+    aluno_service = AlunoService(AlunoRepository(db), NotasRepository(db))
 
     resposta = aluno_service.completar_cadatro(matricula, credenciais.usuario, credenciais.senha)
     

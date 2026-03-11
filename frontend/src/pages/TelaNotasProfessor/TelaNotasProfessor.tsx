@@ -8,7 +8,7 @@ import type Professor from "../../types/Professor";
 import type Aluno from "../../types/Aluno";
 import type Nota from "../../types/Nota";
 import { useGet, usePost } from "../../utils/request";
-import type ResponseLoginProfessor from "../../types/ResponseLoginProfessor";
+import type ResponseProfessor from "../../types/ResponseLoginProfessor";
 import type Disciplina from "../../types/Disciplina";
 
 interface CreateNota {
@@ -55,7 +55,7 @@ export default function TelaNotas() {
       return;
     }
 
-    const infoProfessor: ResponseLoginProfessor = JSON.parse(json);
+    const infoProfessor: ResponseProfessor = JSON.parse(json);
     setProfessor(infoProfessor.professor);
     setMaterias(infoProfessor.materias);
     setAluno(

@@ -3,10 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { usePost } from "../../utils/request";
 import elefante from "../../assets/img/elefante roxo.png";
 import styles from "./Login.module.css";
-import type ResponseLoginProfessor from "../../types/ResponseLoginProfessor";
 import type ResponseLoginAluno from "../../types/ResponseLoginAluno";
 
-type ResponseLogin = ResponseLoginProfessor | ResponseLoginAluno;
+type ResponseLogin = { sucesso: boolean } | ResponseLoginAluno;
 
 export default function Login() {
   const navigate = useNavigate();
@@ -16,20 +15,20 @@ export default function Login() {
   const [mensagemErro, setMensagemErro] = useState<string | null>(null);
   const { data, error, loading, post } = usePost<ResponseLogin>();
 
-  function isProfessor(data: ResponseLogin): data is ResponseLoginProfessor {
-    return "professor" in data;
-  }
+  function isAluno(data: ResponseLogin): data is ResponseLoginAluno {
+    return !("sucesso" in data)
+  } 
 
-  useEffect(() => sessionStorage.clear(), [])
+  useEffect(() => sessionStorage.clear(), []);
 
   useEffect(() => {
     if (!data && !error) return;
-
+    
     if (error) {
       setMensagemErro(error);
       return;
     }
-
+    
     if (!data) {
       console.error(
         "Algo deu errado. A requisição funcionou mas o objeto resposta está vazio",
@@ -37,20 +36,26 @@ export default function Login() {
       setMensagemErro("Erro interno");
       return;
     }
-
-    if (isProfessor(data)) {
-      sessionStorage.setItem("info_professor", JSON.stringify(data));
+    
+    console.log(`resposta do post é aluno: ${isAluno(data!)}`)
+    if (!isAluno(data)) {
+      console.log(`professor fez login: ${data.sucesso}`)
+      sessionStorage.setItem('usuario-professor', usuario)
       navigate("/professor");
     } else {
-      sessionStorage.setItem('info_aluno', JSON.stringify(data))
-      navigate(`/aluno/notas`)
+      sessionStorage.setItem("info_aluno", JSON.stringify(data));
+      navigate(`/aluno/notas`);
     }
   }, [data, error]);
 
   const handleLogin = async () => {
-    const url = !usuario.match(/.*@.*/) ? '/api/login-professor' : '/api/login-aluno'
+    console.log(`é professor: ${!usuario.match(/.*@.*/)}`)
+    const url = !usuario.match(/.*@.*/)
+      ? "/api/login-professor"
+      : "/api/login-aluno";
+    console.log(`url alvo: ${url}`)
     post(url, { usuario: usuario, senha: senha });
-  }
+  };
 
   return (
     <div className={styles.body}>
@@ -99,7 +104,7 @@ export default function Login() {
             </div>
 
             <button className={styles.btnEntrar} onClick={handleLogin}>
-              { loading ? 'Carregando...' : 'Entrar' }
+              {loading ? "Carregando..." : "Entrar"}
             </button>
           </div>
 

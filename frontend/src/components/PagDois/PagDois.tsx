@@ -13,7 +13,7 @@ const carrosselItems = [
 
 export default function PagDois() {
   return (
-    <div>
+    <div id="escola">
       <div className={styles.intro}>
         <p className={styles.titulo2}>
           Aprender, crescer e <br />se fortalecer
@@ -25,7 +25,7 @@ export default function PagDois() {
         </p>
       </div>
 
-      <div className={styles.carrossel}>
+      <div className={styles.carrossel} id="ensinos">
         {carrosselItems.map((item) => (
           <div key={item.label}>
             <img src={item.src} alt={item.alt} className={styles.carrosselImg} />
