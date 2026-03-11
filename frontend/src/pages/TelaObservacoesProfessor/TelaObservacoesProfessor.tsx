@@ -7,7 +7,7 @@ import BoxNovaObservacao from "../../components/BoxNovaObservacao/BoxNovaObserva
 import styles from "./TelaObservacoesProfessor.module.css";
 import type Professor from "../../types/Professor";
 import type Aluno from "../../types/Aluno";
-import type ResponseLoginProfessor from "../../types/ResponseLoginProfessor";
+import type ResponseProfessor from "../../types/ResponseLoginProfessor";
 import type Disciplina from "../../types/Disciplina";
 import type Observacao from "../../types/Observacao";
 
@@ -68,7 +68,7 @@ export default function TelaObservacoesProfessor() {
       return;
     }
 
-    const infoProfessor: ResponseLoginProfessor = JSON.parse(json);
+    const infoProfessor: ResponseProfessor = JSON.parse(json);
     setProfessor(infoProfessor.professor);
     setMaterias(infoProfessor.materias);
     setAluno(

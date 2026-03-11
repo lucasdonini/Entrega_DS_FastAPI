@@ -5,8 +5,9 @@ from uuid import UUID
 
 class AlunoService:
 
-    def __init__(self, aluno_repository: AlunoRepository):
+    def __init__(self, aluno_repository: AlunoRepository, notas_repository: NotasRepository):
         self.aluno_repository = aluno_repository
+        self.notas_repository = notas_repository
 
     def listar_alunos(self):
 
@@ -59,20 +60,27 @@ class AlunoService:
         return self.aluno_repository.completar_cadatro(matricula_uuid, usuario, senha)
 
     def buscar_alunos_por_professor(self, usuario_professor: str):
+        print("\n\nRequisição longa: Recuperar notas dos alunos")
 
         alunos = self.aluno_repository.buscar_alunos_por_professor(
             usuario_professor)
         
         alunos_completos = []
 
-        for aluno in aluno:
-            notas_aluno = NotasRepository.carregar_nota_por_matricula(aluno.matricula)
+        i = 1
+        for aluno in alunos:
+            notas_aluno = self.notas_repository.carregar_nota_por_matricula(aluno.matricula)
+            print(f'{i}) Notas recuperadas: {aluno.nome}')
+            i += 1
+            
+            notas_resposta = [{"n1": n[0].n1, "n2": n[0].n2} for n in notas_aluno]
 
             alunos_completos.append({"matricula": str(aluno.matricula),
                 "nome": aluno.nome,
                 "usuario": aluno.email,
-                "notas":notas_aluno
+                "notas": notas_resposta
                 })
+        return alunos_completos
 
     def login_aluno(self, email: str, senha: str):
 

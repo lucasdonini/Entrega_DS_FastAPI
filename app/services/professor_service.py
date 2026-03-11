@@ -36,7 +36,7 @@ class ProfessorService:
         if professor.senha != senha:
             raise ValueError("O professor não existe")
         
-        return {"Valor":"Sucesso!"}
+        return {"sucesso": True}
     
     def materias_lecionadas(self, usuario:str):
 

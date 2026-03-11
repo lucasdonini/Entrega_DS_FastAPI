@@ -3,11 +3,12 @@ import ProfessorHeader from "../../components/ProfessorHeader/ProfessorHeader";
 import InsightCard from "../../components/InsightCard/InsightCard";
 import TabelaAlunos from "../../components/TabelaAlunos/TabelaAlunos";
 import styles from "./ProfessorHome.module.css";
-import type ResponseLoginProfessor from "../../types/ResponseLoginProfessor";
+import type ResponseProfessor from "../../types/ResponseLoginProfessor";
 import { useEffect, useState } from "react";
 import type Professor from "../../types/Professor";
 import type Aluno from "../../types/Aluno";
 import type Disciplina from "../../types/Disciplina";
+import { useGet } from "../../utils/request";
 
 const iconeAlunos = (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
@@ -139,68 +140,103 @@ export default function ProfessorHome() {
   const navigate = useNavigate();
   const [professor, setProfessor] = useState<Professor>();
   const [alunos, setAlunos] = useState<Aluno[]>([]);
+  const [materias, setMaterias] = useState<Disciplina[]>([]);
+  const [loading, setLoading] = useState(true);
   const [media, setMedia] = useState(0);
   const [qnt_notas, setQntNotas] = useState(0);
-  const [materias, setMaterias] = useState<Disciplina[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const usuario = sessionStorage.getItem("usuario-professor");
+  const {
+    data,
+    error,
+    loading: fetching,
+  } = useGet<ResponseProfessor>(`/api/professor/get-informacoes/${usuario}`);
+  const ready = !(fetching || loading)
 
   useEffect(() => {
-    const json = sessionStorage.getItem("info_professor");
-    if (!json) {
-      navigate("/login");
+    if (!data && !error) return;
+
+    if (error) {
+      console.error("Erro na request: ", error);
       return;
     }
 
-    const professorInfo: ResponseLoginProfessor = JSON.parse(json);
-    setProfessor(professorInfo.professor);
-    setAlunos(professorInfo.alunos);
-    setMedia(professorInfo.media_alunos);
-    setQntNotas(professorInfo.qnt_notas);
-    setMaterias(professorInfo.materias);
-    setLoaded(true);
-  }, []);
+    if (!data) {
+      console.error("Resposta vazia");
+      return;
+    }
+
+    console.group("Carregando informações do professor");
+
+    const notas = data.alunos.flatMap((a) => a.notas!);
+
+    sessionStorage.setItem("info_professor", JSON.stringify(data));
+    console.log("Informações guardadas na sessão");
+
+    setProfessor(data.professor);
+    console.log("Variável de professor inicializada");
+
+    setAlunos(data.alunos);
+    console.log("Lista de aluos inicializada");
+
+    setMaterias(data.materias);
+    console.log("Lista de matérias inicializada");
+
+    setQntNotas(notas.length);
+    console.log("Quantidade de notas calculada");
+
+    setMedia(
+      notas.reduce((soma, { n1, n2 }) => soma + (n1 + n2) / 2, 0) /
+        notas.length,
+    );
+    console.log("Média geral calculada");
+    console.groupEnd();
+
+    setLoading(false);
+  }, [data, error]);
+
+  if (error) return <p>Erro</p>;
 
   return (
-    loaded && (
-      <>
-        <ProfessorHeader nomeProfessor={professor!.nome} materias={materias} />
-        <main>
-          <a href="/" className={styles.btnVoltar}>
-            <i className="bi bi-arrow-left-circle"></i>
-            <p>Voltar</p>
-          </a>
+    <>
+      <ProfessorHeader nomeProfessor={ready ? professor!.nome : "Carregando..."} materias={materias} />
+      <main>
+        <a href="/" className={styles.btnVoltar}>
+          <i className="bi bi-arrow-left-circle"></i>
+          <p>Voltar</p>
+        </a>
 
-          <div className={styles.welcomeMessage}>
-            <h1>Bem-vindo, {professor!.nome}!</h1>
-            <h3>Gerencie suas turmas</h3>
-          </div>
+        <div className={styles.welcomeMessage}>
+          <h1>Bem-vindo, {ready ? professor!.nome : "professor(a)"}!</h1>
+          <h3>Gerencie suas turmas</h3>
+        </div>
 
-          <div className={styles.insightsContainer}>
-            <InsightCard
-              icone={iconeAlunos}
-              valor={alunos.length}
-              label="Total de alunos"
-            />
-            <InsightCard
-              icone={iconeNotas}
-              valor={qnt_notas}
-              label="Notas lançadas"
-            />
-            <InsightCard
-              icone={iconeMedia}
-              valor={media.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}
-              label="Média geral dos alunos"
-            />
-          </div>
-
-          <TabelaAlunos
-            alunos={alunos}
-            onAlunoClick={(matricula) =>
-              navigate(`/professor/aluno/${matricula}/notas`)
-            }
+        <div className={styles.insightsContainer}>
+          <InsightCard
+            icone={iconeAlunos}
+            valor={ready ? alunos.length : "..."}
+            label="Total de alunos"
           />
-        </main>
-      </>
-    )
+          <InsightCard
+            icone={iconeNotas}
+            valor={ready ? qnt_notas : "..."}
+            label="Notas lançadas"
+          />
+          <InsightCard
+            icone={iconeMedia}
+            valor={ready ? media.toLocaleString("pt-BR", {
+              maximumFractionDigits: 2,
+            }) : "..."}
+            label="Média geral dos alunos"
+          />
+        </div>
+
+        {ready ? <TabelaAlunos
+          alunos={alunos}
+          onAlunoClick={(matricula) =>
+            navigate(`/professor/aluno/${matricula}/notas`)
+          }
+        /> : <p>Carregando...</p>}
+      </main>
+    </>
   );
 }
