@@ -1,4 +1,5 @@
 from repositories.aluno_repository import AlunoRepository
+from repositories.notas_repository import NotasRepository
 from uuid import UUID
 
 
@@ -61,10 +62,17 @@ class AlunoService:
 
         alunos = self.aluno_repository.buscar_alunos_por_professor(
             usuario_professor)
+        
+        alunos_completos = []
 
-        return [
-            aluno.to_dict() for aluno in alunos
-        ]
+        for aluno in aluno:
+            notas_aluno = NotasRepository.carregar_nota_por_matricula(aluno.matricula)
+
+            alunos_completos.append({"matricula": str(aluno.matricula),
+                "nome": aluno.nome,
+                "usuario": aluno.email,
+                "notas":notas_aluno
+                })
 
     def login_aluno(self, email: str, senha: str):
 
@@ -76,3 +84,6 @@ class AlunoService:
             raise ValueError("O aluno não existe")
 
         return aluno
+    
+
+    
